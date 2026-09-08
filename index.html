@@ -1,75 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>decameron - speed camera detector</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 </head>
+
 <body>
-    <header>
-        <a href="#">home</a>
-        <a href="#">how it works</a>
-        <a href="#">setup & update</a>
-        <a href="#">shop</a>
+    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+        <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+            <svg class="bi me-2" width="40" height="32" aria-hidden="true">
+                <use xlink:href="#bootstrap"></use>
+            </svg>
+            <span class="fs-4">decameron</span>
+        </a>
+        <ul class="nav nav-pills">
+            <li class="nav-item"><a href="#" class="nav-link active" aria-current="page">home</a></li>
+            <li class="nav-item"><a href="#" class="nav-link">how it works</a></li>
+            <li class="nav-item"><a href="#" class="nav-link">setup & update</a></li>
+            <li class="nav-item"><a href="#" class="nav-link">shop</a></li>
+        </ul>
     </header>
+
     <main>
-        <div class="hero">
-            <h1>plug & play speed camera detector</h1>
-            <div>
-                <div>
-                    <h2>70,000+</h2>
-                    <span>speed cameras</span>
+        <div class="container col-xxl-8 px-4 py-5">
+            <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+                <div class="col-10 col-sm-8 col-lg-6">
+                    <img src="decameron-hero.webp" class="d-block mx-lg-auto img-fluid" alt="Bootstrap Themes"
+                        width="700" height="500" loading="lazy">
                 </div>
-                <div>
-                    <h2>daily updates</h2>
-                    <span>free forever</span>
-                </div>
-                <div>
-                    <h2>100% offline</h2>
-                    <span>no network required</span>
+                <div class="col-lg-6">
+                    <h1 class="display-5 fw-bold text-body-emphasis lh-1 mb-3">plug & play speed camera detector</h1>
+                    <p class="lead">70,000+</p>
+                    <p class="lead">speed cameras</p>
+                    <p class="lead">daily updates</p>
+                    <p class="lead">free forever</p>
+                    <p class="lead">100% offline</p>
+                    <p class="lead">no network required</p>
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                        <button type="button" class="btn btn-primary btn-lg px-4 me-md-2">check camera coverage</button>
+                        <button type="button" class="btn btn-outline-secondary btn-lg px-4">order now</button>
+                    </div>
                 </div>
             </div>
-            <div>
-                <button>check camera coverage</button>
-                <button>order now</button>
-            </div>
-            <img src="decameron-hero.webp" alt="decameron on the car dashboard">
         </div>
-        <div class="capabilities">
-            <div>
-                <h1>meet decameron</h1>
-                <h2>speed camera detector that works 100% offline: no apps, no internet, no location tracking</h2>
+
+        <div class="container px-4 py-5">
+            <div class="row row-cols-1 row-cols-md-2 align-items-md-center g-5 py-5">
+                <div class="col d-flex flex-column align-items-start gap-2">
+                    <h2 class="fw-bold text-body-emphasis">meet decameron</h2>
+                    <p class="text-body-secondary">speed camera detector that works 100% offline: no apps, no internet,
+                        no location tracking</p>
+                    <a href="#" class="btn btn-primary btn-lg">buy now for 99 €</a>
+                </div>
+                <div class="col">
+                    <div class="row row-cols-1 row-cols-sm-2 g-4">
+                        <div class="col d-flex flex-column gap-2">
+                            <div
+                                class="feature-icon-small d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4 rounded-3">
+                                <svg class="bi" width="1em" height="1em" aria-hidden="true">
+                                    <use xlink:href="#gear-fill"></use>
+                                </svg>
+                            </div>
+                            <p class="text-body-secondary">visual & voice alerts</p>
+                        </div>
+                        <div class="col d-flex flex-column gap-2">
+                            <div
+                                class="feature-icon-small d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4 rounded-3">
+                                <svg class="bi" width="1em" height="1em" aria-hidden="true">
+                                    <use xlink:href="#gear-fill"></use>
+                                </svg>
+                            </div>
+                            <p class="text-body-secondary">70,000+ speed cameras</p>
+                        </div>
+                        <div class="col d-flex flex-column gap-2">
+                            <div
+                                class="feature-icon-small d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4 rounded-3">
+                                <svg class="bi" width="1em" height="1em" aria-hidden="true">
+                                    <use xlink:href="#speedometer"></use>
+                                </svg>
+                            </div>
+                            <p class="text-body-secondary">free daily updates</p>
+                        </div>
+                        <div class="col d-flex flex-column gap-2">
+                            <div
+                                class="feature-icon-small d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4 rounded-3">
+                                <svg class="bi" width="1em" height="1em" aria-hidden="true">
+                                    <use xlink:href="#table"></use>
+                                </svg>
+                            </div>
+                            <p class="text-body-secondary">USB-C powered</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div>
-                <div>
-                    <img src="alert.svg" alt="visual & voice alerts">
-                    <span>visual & voice alerts</span>
-                </div>
-                <div>
-                    <img src="camera.svg" alt="70,000+ speed cameras">
-                    <span>70,000+ speed cameras</span>
-                </div>
-                <div>
-                    <img src="update.svg" alt="free daily updates">
-                    <span>free daily updates</span>
-                </div>
-                <div>
-                    <img src="usb-c.svg" alt="USB-C powered">
-                    <span>USB-C powered</span>
-                </div>
-            </div>
-            <div>
-                <img src="decameron.png" alt="decameron">
-                <div>
-                    <img src="decameron.png" alt="decameron">
-                    <img src="decameron.png" alt="decameron front">
-                    <img src="decameron.png" alt="decameron left">
-                    <img src="decameron.png" alt="decameron right">
-                    <img src="decameron.png" alt="decameron bottom">
-                </div>
-            </div>
-            <button>buy now for 99 €</button>
         </div>
+
         <div class="setup-and-update">
             <h1>simple setup & device update</h1>
             <img src="decameron.png" alt="decameron setup">
@@ -82,11 +111,13 @@
             </div>
             <button>see setup & update guide</button>
         </div>
+
         <div class="software">
             <h1>decameron runs open source software, global coverage with no subscription - free forever</h1>
             <div class="map"></div>
             <button>explore 70,000+ speed cameras</button>
         </div>
+
         <div class="closing-cta">
             <img src="decameron.png" alt="decameron">
             <div>
@@ -96,6 +127,46 @@
             </div>
         </div>
     </main>
-    <footer></footer>
+
+    <div class="container">
+        <footer class="row row-cols-1 row-cols-sm-2 row-cols-md-5 py-5 my-5 border-top">
+            <div class="col mb-3">
+                <a href="/" class="d-flex align-items-center mb-3 link-body-emphasis text-decoration-none"
+                    aria-label="Bootstrap">
+                    <svg class="bi me-2" width="40" height="32" aria-hidden="true">
+                        <use xlink:href="#bootstrap"></use>
+                    </svg>
+                </a>
+                <p class="text-body-secondary">© decameron 2026</p>
+            </div>
+            <div class="col mb-3"></div>
+            <div class="col mb-3">
+                <h5>Product</h5>
+                <ul class="nav flex-column">
+                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">How It Works</a></li>
+                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Setup & Update</a>
+                    </li>
+                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Shop</a></li>
+                </ul>
+            </div>
+            <div class="col mb-3">
+                <h5>Company</h5>
+                <ul class="nav flex-column">
+                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">About</a></li>
+                </ul>
+            </div>
+            <div class="col mb-3">
+                <h5>Support</h5>
+                <ul class="nav flex-column">
+                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Support & FAQs</a>
+                    </li>
+                </ul>
+            </div>
+        </footer>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
 </body>
+
 </html>
