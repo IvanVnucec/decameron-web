@@ -10,8 +10,8 @@
 </head>
 
 <body>
-    <header data-bs-theme="dark">
-        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <header class="mb-5">
+        <nav class="navbar navbar-expand-md fixed-top bg-white border border-black">
             <div class="container">
                 <a class="navbar-brand" href="#">decameron</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
@@ -19,7 +19,7 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
-                    <ul class="navbar-nav ms-auto mb-2 mb-md-0">
+                    <ul class="navbar-nav ms-auto mb-2 mb-md-0 gap-4">
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="#">home</a>
                         </li>
@@ -39,73 +39,89 @@
     </header>
 
     <main>
-        <div class="container col-xxl-8 px-4 py-5">
-            <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
-                <div class="col-10 col-sm-8 col-lg-6">
-                    <img src="decameron-hero.webp" class="d-block mx-lg-auto img-fluid"
-                        alt="decameron on the car dashboard" width="700" height="500" loading="lazy">
-                </div>
-                <div class="col-lg-6">
-                    <h1 class="display-5 fw-bold text-body-emphasis lh-1 mb-3">plug & play<br>speed camera detector</h1>
-                    <p class="lead">70,000+<br>speed cameras</p>
-                    <p class="lead">daily updates<br>free forever</p>
-                    <p class="lead">100% offline<br>no network required</p>
-                    <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-                        <button type="button" class="btn btn-primary btn-lg px-4 me-md-2">check camera coverage</button>
-                        <button type="button" class="btn btn-outline-secondary btn-lg px-4">order now</button>
+        <div class="container-fluid px-0 position-relative">
+            <img src="decameron-hero.jpg" class="img-fluid w-100 d-block" alt="decameron on the car dashboard"
+                loading="lazy">
+            <div class="position-absolute top-0 start-0 w-100 h-100"
+                style="background: linear-gradient(to bottom, transparent 85%, rgba(0,0,0,1) 100%);"></div>
+            <div class="position-absolute bottom-0 start-0 text-white p-5">
+                <div style="text-shadow: 0px 0px 6px rgba(0,0,0,0.8);">
+                    <h1 class="display-4 fw-semibold mb-0">plug & play</h1>
+                    <h1 class="display-4 fw-semibold mb-4">speed camera detector</h1>
+                    <div class="mb-5 d-flex flex-row gap-5 text-nowrap">
+                        <div class="col">
+                            <div class="row fs-1">70,000+</div>
+                            <div class="row">speed cameras</div>
+                        </div>
+                        <div class="col">
+                            <div class="row fs-1">daily updates</div>
+                            <div class="row">free forever</div>
+                        </div>
+                        <div class="col">
+                            <div class="row fs-1">100% offline</div>
+                            <div class="row">no network required</div>
+                        </div>
                     </div>
+                </div>
+                <div class="d-flex flex-row gap-2">
+                    <button type="button" class="btn btn-primary btn-lg px-4 me-md-2">check camera coverage</button>
+                    <button type="button" class="btn btn-outline-secondary btn-lg px-4">order now</button>
                 </div>
             </div>
         </div>
 
-        <div class="container px-4 py-5">
-            <div class="row row-cols-1 row-cols-md-2 align-items-md-center g-5 py-5">
-                <div class="col d-flex flex-column align-items-start gap-2">
-                    <img src="decameron.png" alt="decameron" loading="lazy">
-                </div>
-                <div class="col">
-                    <h1 class="fw-bold text-body-emphasis mb-0">meet decameron</h1>
-                    <p class="text-body-secondary">speed camera detector that works 100% offline: no apps, no internet,
-                        no location tracking</p>
-                    <div class="row row-cols-1 row-cols-sm-2 g-4">
-                        <div class="col d-flex flex-column gap-2">
-                            <div
-                                class="feature-icon-small d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4 rounded-3">
-                                <svg class="bi" width="1em" height="1em" aria-hidden="true">
-                                    <use xlink:href="#gear-fill"></use>
-                                </svg>
-                            </div>
-                            <p class="text-body-secondary">visual & voice alerts</p>
-                        </div>
-                        <div class="col d-flex flex-column gap-2">
-                            <div
-                                class="feature-icon-small d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4 rounded-3">
-                                <svg class="bi" width="1em" height="1em" aria-hidden="true">
-                                    <use xlink:href="#gear-fill"></use>
-                                </svg>
-                            </div>
-                            <p class="text-body-secondary">70,000+ speed cameras</p>
-                        </div>
-                        <div class="col d-flex flex-column gap-2">
-                            <div
-                                class="feature-icon-small d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4 rounded-3">
-                                <svg class="bi" width="1em" height="1em" aria-hidden="true">
-                                    <use xlink:href="#speedometer"></use>
-                                </svg>
-                            </div>
-                            <p class="text-body-secondary">free daily updates</p>
-                        </div>
-                        <div class="col d-flex flex-column gap-2">
-                            <div
-                                class="feature-icon-small d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4 rounded-3">
-                                <svg class="bi" width="1em" height="1em" aria-hidden="true">
-                                    <use xlink:href="#table"></use>
-                                </svg>
-                            </div>
-                            <p class="text-body-secondary">USB-C powered</p>
-                        </div>
+        <div class="container-fluid bg-black">
+            <div class="container px-4 py-5">
+                <div class="row row-cols-1 row-cols-md-2 align-items-md-center g-5 py-5">
+                    <div class="col d-flex flex-column align-items-start gap-2">
+                        <img src="decameron.png" alt="decameron" loading="lazy">
                     </div>
-                    <a href="#" class="btn btn-primary btn-lg">buy now for 99 €</a>
+                    <div class="col">
+                        <h1 class=" fw-bold text-light mb-0">meet decameron</h1>
+                        <h1 class="fs-5 text-light-emphasis mb-5">speed camera detector that works 100% offline: no
+                            apps, no
+                            internet,
+                            no location tracking</h1>
+                        <div class="row row-cols-1 row-cols-sm-2 g-4">
+                            <div class="col d-flex flex-column gap-2">
+                                <div
+                                    class="feature-icon-small d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4 rounded-3">
+                                    <svg class="bi" width="1em" height="1em" aria-hidden="true">
+                                        <use xlink:href="#gear-fill"></use>
+                                    </svg>
+                                </div>
+                                <p class="text-light">visual & voice alerts</p>
+                            </div>
+                            <div class="col d-flex flex-column gap-2">
+                                <div
+                                    class="feature-icon-small d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4 rounded-3">
+                                    <svg class="bi" width="1em" height="1em" aria-hidden="true">
+                                        <use xlink:href="#gear-fill"></use>
+                                    </svg>
+                                </div>
+                                <p class="text-light">70,000+ speed cameras</p>
+                            </div>
+                            <div class="col d-flex flex-column gap-2">
+                                <div
+                                    class="feature-icon-small d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4 rounded-3">
+                                    <svg class="bi" width="1em" height="1em" aria-hidden="true">
+                                        <use xlink:href="#speedometer"></use>
+                                    </svg>
+                                </div>
+                                <p class="text-light">free daily updates</p>
+                            </div>
+                            <div class="col d-flex flex-column gap-2">
+                                <div
+                                    class="feature-icon-small d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-4 rounded-3">
+                                    <svg class="bi" width="1em" height="1em" aria-hidden="true">
+                                        <use xlink:href="#table"></use>
+                                    </svg>
+                                </div>
+                                <p class="text-light">USB-C powered</p>
+                            </div>
+                        </div>
+                        <a href="#" class="btn btn-primary btn-lg">buy now for 99 €</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -129,10 +145,13 @@
             </div>
         </div>
 
-        <div class="container py-5">
-            <h1>decameron runs open source software, global coverage with no subscription - free forever</h1>
-            <div class="map"></div>
-            <a href="#" class="btn btn-primary btn-lg">explore 70,000+ speed cameras</a>
+        <div class="container-fluid bg-black">
+            <div class="container py-5">
+                <h1 class="text-light">decameron runs open source software, global coverage with no subscription - free
+                    forever</h1>
+                <div class="map"></div>
+                <a href="#" class="btn btn-primary btn-lg">explore 70,000+ speed cameras</a>
+            </div>
         </div>
 
         <div class="container py-5">
@@ -149,41 +168,52 @@
         </div>
     </main>
 
-    <div class="container">
-        <footer class="row row-cols-1 row-cols-sm-2 row-cols-md-5 py-5 my-5 border-top">
-            <div class="col mb-3">
-                <a href="/" class="d-flex align-items-center mb-3 link-body-emphasis text-decoration-none"
-                    aria-label="Bootstrap">
-                    <svg class="bi me-2" width="40" height="32" aria-hidden="true">
-                        <use xlink:href="#bootstrap"></use>
-                    </svg>
-                </a>
-                <p class="text-body-secondary">© decameron 2026</p>
-            </div>
-            <div class="col mb-3"></div>
-            <div class="col mb-3">
-                <h5>Product</h5>
-                <ul class="nav flex-column">
-                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">How It Works</a></li>
-                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Setup & Update</a>
-                    </li>
-                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Shop</a></li>
-                </ul>
-            </div>
-            <div class="col mb-3">
-                <h5>Company</h5>
-                <ul class="nav flex-column">
-                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">About</a></li>
-                </ul>
-            </div>
-            <div class="col mb-3">
-                <h5>Support</h5>
-                <ul class="nav flex-column">
-                    <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-body-secondary">Support & FAQs</a>
-                    </li>
-                </ul>
-            </div>
-        </footer>
+    <div class="container-fluid bg-black">
+        <div class="container">
+            <footer class="row row-cols-1 row-cols-sm-2 row-cols-md-5 py-5 my-5">
+                <div class="col mb-3">
+                    <a href="/" class="d-flex align-items-center mb-3 link-body-emphasis text-decoration-none"
+                        aria-label="Bootstrap">
+                        <svg class="bi me-2" width="40" height="32" aria-hidden="true">
+                            <use xlink:href="#bootstrap"></use>
+                        </svg>
+                    </a>
+                    <p class="text-light">© decameron 2026</p>
+                </div>
+                <div class="col mb-3"></div>
+                <div class="col mb-3">
+                    <h1 class="fs-6 text-dark-emphasis">PRODUCT</h1>
+                    <ul class="nav flex-column">
+                        <li class="nav-item mb-2">
+                            <a href="#" class="nav-link p-0 text-light">How It Works</a>
+                        </li>
+                        <li class="nav-item mb-2">
+                            <a href="#" class="nav-link p-0 text-light">Setup & Update</a>
+                        </li>
+                        <li class="nav-item mb-2">
+                            <a href="#" class="nav-link p-0 text-light">Shop</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col mb-3">
+                    <h1 class="fs-6 text-dark-emphasis">COMPANY</h1>
+                    <ul class="nav flex-column">
+                        <li class="nav-item mb-2">
+                            <a href="#" class="nav-link p-0 text-light">About</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col mb-3">
+                    <h1 class="fs-6 text-dark-emphasis">SUPPORT</h1>
+                    <ul class="nav flex-column">
+                        <li class="nav-item mb-2">
+                            <a href="#" class="nav-link p-0 text-light">Support &
+                                FAQs</a>
+                        </li>
+                    </ul>
+                </div>
+            </footer>
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
