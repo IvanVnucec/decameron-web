@@ -28,10 +28,10 @@
                             <a class="nav-link active" aria-current="page" href="how-it-works">how it works</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="setup-and-update">setup &amp; update</a>
+                            <a class="nav-link" href="camera-coverage">camera coverage</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="camera-coverage">camera coverage</a>
+                            <a class="nav-link" href="setup-and-update">setup &amp; update</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="shop">shop</a>
@@ -42,7 +42,57 @@
         </nav>
     </header>
 
-    <main></main>
+    <main>
+        <div class="container">
+            <section>
+                <p>
+                    Decameron is a speed camera detector that uses a GNSS module to determine your speed and position. It then
+                    compares your position to a database of known speed camera locations stored on device.
+                </p>
+                <p>
+                    On approaching a speed camera, Decameron will alert you with a voice message spefiying the camera
+                    speed
+                    limit and a visual LED alert.
+                </p>
+            </section>
+            <section>
+                <h2>getting started</h2>
+                <ol>
+                    <li>Connect the device to a USB-C power source.</li>
+                    <li>Place the device on or near the vehicle dashboard with the speaker facing downward.</li>
+                </ol>
+                <p>And thats it. You can enjoy peacefull driving.</p>
+                When you connect the device, you should hear the startup sound. If it doesn’t play, simply turn the
+                volume rotary wheel clockwise or counterclockwise to adjust it to your liking.
+                decameron has three LEDs that show different status information:
+                - LED closest to the rotary wheel (System Status): Blinks green periodically when everything is
+                working
+                normally, and red when there’s an issue.
+                - Middle LED (Blue): Flashes when a speed camera is detected.
+                - Outer LED (GPS Fix): Red while searching for a GPS signal, green once a position is acquired.
+                When first powered on, decameron needs about 30 seconds to acquire a GPS fix. After that, it
+                maintains the
+                signal. If it’s temporarily lost (e.g. in tunnels), it usually regains it in a matter of seconds.
+                When a speed camera is detected, the device flashes the blue LED and gives an audio warning with the
+                speed
+                limit. Faster beeping means your current speed is above the camera’s limit, while slower beeping
+                means
+                you’re below it.
+            </section>
+        </div>
+        <a class="">see setup and update</a>
+
+        <p>device knows its own position over GNSS</p>
+        <p>calculating distance to the closest camera</p>
+        <p>if distance is less then 300 m radious, alarm</p>
+        <a class="">check speed camera coverage</a>
+
+        <h2>FAQ</h2>
+        <p>why the device beeps when no camera is on the road?</p>
+        <p>why the device wont stop beeping even if i have passed the camera?</p>
+        <p>missing camera?</p>
+
+    </main>
 
     <div class="container-fluid bg-body text-body" data-bs-theme="light">
         <div class="container">
@@ -66,11 +116,11 @@
                             <a href="how-it-works" class="nav-link p-0 text-body-secondary">How It Works</a>
                         </li>
                         <li class="nav-item mb-2">
-                            <a href="setup-and-update" class="nav-link p-0 text-body-secondary">Setup &amp;
-                                Update</a>
+                            <a href="camera-coverage" class="nav-link p-0 text-body-secondary">Camera Coverage</a>
                         </li>
                         <li class="nav-item mb-2">
-                            <a href="camera-coverage" class="nav-link p-0 text-body-secondary">Camera Coverage</a>
+                            <a href="setup-and-update" class="nav-link p-0 text-body-secondary">Setup &amp;
+                                Update</a>
                         </li>
                         <li class="nav-item mb-2">
                             <a href="shop" class="nav-link p-0 text-body-secondary">Shop</a>
