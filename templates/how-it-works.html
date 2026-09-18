@@ -4,6 +4,41 @@
 
 {% block content %}
 <div class="container">
+    h1 "how decameron works"
+
+<FROM SIMPLEST TO MORE DETAILS>
+
+<SHORT INTRO>
+
+decameron is a speed camera detector that warns approaching speed cameras. It is a standalone device that works without internet connection: camera database is stored locally on the device. just plug it in and drive. simple as that.
+
+<EXPLAIN THE DETAILS>
+
+when you power in the device into a USB-C port, the device will start searching for a GPS signal. Once signal is found, the device will search and calculate the distance to the nearest speed camera. When you are in a 300 meters to the closest one, the LED will start flashing and it will annouce the camera speed limit.
+
+decameron ships with more than 70,000 speed cameras globally with new ones added each day.
+the camera positions are fetched from the openstreetmap.org which is open community data. you can check the camera coverage here.
+
+the device camera positions are real easy to update and it takes less than a minute. its like drag & droping a file on a USB stick
+See setup & update for detailed instructions.
+
+the build script that creates the device updates is open source so the updates are free forever.
+
+because everything is locally stored, the device works even if no internet connection is present - ideal for long trips anywhere in the world.
+device is privacy frendly because the device doesnt send any data.
+
+device is simple: no app needed. you just plug it in and drive.
+
+under the hood it runs open source software (link github.com/IvanVnucec/catchcam)
+
+CTA — "buy now for 99 €"
+
+faq:
+h2 "what it detects — and what it doesn't" — fixed speed cameras only; honestly notes no red-light, average-speed, or mobile cameras. Link → camera-coverage.
+h2 "why a device instead of a phone app" — bullets: no distraction, no battery drain, no phone mount, works instantly at power-on, no subscription.
+is GPS signal globally available?
+
+
     <section>
         <p>
             Decameron is a speed camera detector that uses a GNSS module to determine your speed and position. It then
@@ -48,7 +83,13 @@
 <a class="">check speed camera coverage</a>
 
 <h2>FAQ</h2>
-<p>why the device beeps when no camera is on the road?</p>
 <p>why the device wont stop beeping even if i have passed the camera?</p>
-<p>missing camera?</p>
+<p>do i need internet or app? → no, 100% offline</p>
+<p>does it tracks my location? → no, one-way GPS</p>
+<p>does it support mobile cameras? → fixed only → link camera-coverage</p>
+<p>is my country supported? → global, growing daily → link camera-coverage</p>
+<p>is this legal in my country? → generic cautious: GPS navigator with a database, doesn't detect/jam radar, check local laws</p>
+<p>does it work in tunnels? → warnings pause, resume after signal</p>
+<p>missing/wrong camera? → open community data, report fixes</p>
+<p>power? → any USB-C source</p>
 {% endblock %}
