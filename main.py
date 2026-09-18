@@ -6,14 +6,19 @@ ROOT = Path(__file__).parent
 TEMPLATES_DIR = ROOT / "templates"
 BUILD_DIR = ROOT / "build"
 
+CONTEXT = {
+    "price": "99 €",
+    "num_cams": "70,000+",
+}
+
 PAGES = {
-    "index.html": {"output": "index.html", "context": {}},
-    "about.html": {"output": "about.html", "context": {}},
-    "how-it-works.html": {"output": "how-it-works.html", "context": {}},
-    "camera-coverage.html": {"output": "camera-coverage.html", "context": {}},
-    "setup-and-update.html": {"output": "setup-and-update.html", "context": {}},
-    "shop.html": {"output": "shop.html", "context": {}},
-    "support-and-faq.html": {"output": "support-and-faq.html", "context": {}},
+    "index.html": {"output": "index.html", "context": CONTEXT},
+    "about.html": {"output": "about.html", "context": CONTEXT},
+    "how-it-works.html": {"output": "how-it-works.html", "context": CONTEXT},
+    "camera-coverage.html": {"output": "camera-coverage.html", "context": CONTEXT},
+    "setup-and-update.html": {"output": "setup-and-update.html", "context": CONTEXT},
+    "shop.html": {"output": "shop.html", "context": CONTEXT},
+    "support-and-faq.html": {"output": "support-and-faq.html", "context": CONTEXT},
 }
 
 env = Environment(
