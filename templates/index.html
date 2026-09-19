@@ -32,6 +32,20 @@
             height: 80vh;
         }
     }
+
+    .update-list {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .update-list::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        pointer-events: none;
+        background: linear-gradient(to bottom, rgba(var(--bs-body-bg-rgb), 0) 40%, rgba(var(--bs-body-bg-rgb), 0.9) 100%);
+    }
 </style>
 {% endblock head_extras %}
 {% block body_class %}pt-0{% endblock body_class %}
@@ -174,7 +188,7 @@
             </div>
             <div class="col-xl-5 d-flex flex-column justify-content-end">
                 <div class="mb-3">
-                    <div class="fs-5">
+                    <div class="fs-5 update-list">
                         <div
                             class="d-flex flex-column flex-xl-row justify-content-xl-between py-2 border-bottom">
                             <div>+24 new cameras added</div>
@@ -195,15 +209,15 @@
                             <div>+45 new cameras added</div>
                             <div>3 days ago</div>
                         </div>
-                        <div class="d-flex flex-column flex-xl-row justify-content-xl-between py-2 border-bottom" style="opacity: 50%">
+                        <div class="d-flex flex-column flex-xl-row justify-content-xl-between py-2 border-bottom">
                             <div>+12 new cameras added</div>
                             <div>4 days ago</div>
                         </div>
-                        <div class="d-flex flex-column flex-xl-row justify-content-xl-between py-2 border-bottom" style="opacity: 25%">
+                        <div class="d-flex flex-column flex-xl-row justify-content-xl-between py-2 border-bottom">
                             <div>+67 new cameras added</div>
                             <div>5 days ago</div>
                         </div>
-                        <div class="d-flex flex-column flex-xl-row justify-content-xl-between py-2" style="opacity: 10%">
+                        <div class="d-flex flex-column flex-xl-row justify-content-xl-between py-2">
                             <div>+26 new cameras added</div>
                             <div>6 days ago</div>
                         </div>
