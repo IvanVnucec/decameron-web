@@ -1,6 +1,8 @@
+import argparse
 import shutil
 from pathlib import Path
 from jinja2 import Environment, FileSystemLoader, select_autoescape
+import livereload
 
 ROOT = Path(__file__).parent
 TEMPLATES_DIR = ROOT / "templates"
@@ -26,7 +28,7 @@ env = Environment(
     autoescape=select_autoescape(["html"]),
 )
 
-def main():
+def build():
     shutil.rmtree(BUILD_DIR, ignore_errors=True)
     BUILD_DIR.mkdir()
 
@@ -36,6 +38,22 @@ def main():
         out_path.write_text(html, encoding="utf-8")
     shutil.copytree(ROOT / "css", BUILD_DIR / "css")
     shutil.copytree(ROOT / "img", BUILD_DIR / "img")
+    print("Files generated.")
+
+def watch(port):
+    build()
+    server = livereload.Server()
+    for path in (TEMPLATES_DIR, ROOT / "css", ROOT / "img", Path(__file__)):
+        server.watch(path, build, delay=0.3)
+    server.serve(port=port, root=BUILD_DIR, open_url_delay=0.0)
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser(description="Build the site; optionally watch and serve with live-reload.")
+    parser.add_argument("--watch", action="store_true", help="rebuild on changes and serve build/ with live-reload")
+    parser.add_argument("--port", type=int, default=8000, help="port for --watch server (default: 8000)")
+    args = parser.parse_args()
+
+    if args.watch:
+        watch(args.port)
+    else:
+        build()
