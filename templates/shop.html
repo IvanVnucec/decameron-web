@@ -3,4 +3,122 @@
 {% block title %}decameron - shop{% endblock %}
 
 {% block content %}
+
+<div class="container-fluid bg-body text-body" data-bs-theme="dark">
+    <div class="container py-5">
+        <div class="row gx-5 gy-5 align-items-center">
+            <div class="col-lg-6">
+                <h1 class="display-3 fw-semibold lh-1 mb-3">order decameron</h1>
+                <p class="fs-4 text-secondary mb-4">plug &amp; play speed camera detector with {{ num_cams }} fixed speed cameras stored on the device.</p>
+                <div class="d-flex flex-wrap align-items-baseline gap-3 mb-4">
+                    <div class="display-5 fw-semibold lh-1">{{ price }}</div>
+                    <div class="fs-5 text-secondary">one-time purchase</div>
+                </div>
+                <a href="mailto:{{ contact_email }}?subject=decameron%20order" class="btn btn-primary btn-lg px-4">order by email</a>
+                <div class="border-top border-secondary mt-5 pt-4">
+                    <div class="fs-6 text-secondary mb-2">how to order</div>
+                    <ol class="fs-6 text-secondary mb-0 d-flex flex-column gap-2">
+                        <li>email us with the quantity and shipping address</li>
+                        <li>we confirm availability and shipping cost</li>
+                        <li>pay via Revolut or bank transfer</li>
+                        <li>we ship after payment</li>
+                    </ol>
+                </div>
+            </div>
+            <div class="col-lg-6 d-flex justify-content-center">
+                <img src="img/decameron.png" class="img-fluid w-75" alt="decameron speed camera detector" loading="lazy">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid bg-body text-body" data-bs-theme="light">
+    <div class="container py-5">
+        <h2 class="display-3 fw-semibold lh-1 mb-4">specs</h2>
+        <dl class="row fs-5 mb-0">
+            <dt class="col-sm-4">power</dt>
+            <dd class="col-sm-8 text-secondary">USB-C</dd>
+            <dt class="col-sm-4">positioning</dt>
+            <dd class="col-sm-8 text-secondary">GPS</dd>
+            <dt class="col-sm-4">alerts</dt>
+            <dd class="col-sm-8 text-secondary">LED and voice</dd>
+            <dt class="col-sm-4">camera list</dt>
+            <dd class="col-sm-8 text-secondary">{{ num_cams }} fixed speed cameras stored on the device</dd>
+            <dt class="col-sm-4">updates</dt>
+            <dd class="col-sm-8 text-secondary">free, via USB-C</dd>
+            <dt class="col-sm-4">phone or app required</dt>
+            <dd class="col-sm-8 text-secondary">no</dd>
+        </dl>
+    </div>
+</div>
+
+<div class="container-fluid bg-body text-body" data-bs-theme="dark">
+    <div class="container py-5">
+        <h2 class="display-3 fw-semibold lh-1 mb-4">what's in the box</h2>
+        <ul class="fs-5 d-flex flex-column gap-2 mb-0">
+            <li>decameron device</li>
+            <li>USB-C cable</li>
+            <li>quick-start card</li>
+        </ul>
+    </div>
+</div>
+
+<div class="container-fluid bg-body text-body" data-bs-theme="light">
+    <div class="container py-5">
+        <h2 class="display-3 fw-semibold lh-1 mb-4">shop questions</h2>
+        <div class="accordion" id="shopFaqAccordion">
+            <div class="accordion-item">
+                <h3 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#shopFaq1" aria-expanded="false" aria-controls="shopFaq1">how do i order?</button>
+                </h3>
+                <div id="shopFaq1" class="accordion-collapse collapse" data-bs-parent="#shopFaqAccordion">
+                    <div class="accordion-body">email us with the quantity and shipping address. we reply with availability, shipping cost, and payment details.</div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h3 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#shopFaq2" aria-expanded="false" aria-controls="shopFaq2">how do i pay?</button>
+                </h3>
+                <div id="shopFaq2" class="accordion-collapse collapse" data-bs-parent="#shopFaqAccordion">
+                    <div class="accordion-body">pay via Revolut or bank transfer. there is no card checkout on this site.</div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h3 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#shopFaq3" aria-expanded="false" aria-controls="shopFaq3">can i get an invoice?</button>
+                </h3>
+                <div id="shopFaq3" class="accordion-collapse collapse" data-bs-parent="#shopFaqAccordion">
+                    <div class="accordion-body">yes. ask for an invoice in your order email and include the billing details.</div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h3 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#shopFaq4" aria-expanded="false" aria-controls="shopFaq4">how is shipping calculated?</button>
+                </h3>
+                <div id="shopFaq4" class="accordion-collapse collapse" data-bs-parent="#shopFaqAccordion">
+                    <div class="accordion-body">shipping depends on the destination. we confirm the cost and delivery estimate by email before you pay.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid bg-body text-body" data-bs-theme="dark">
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-lg-4 d-flex justify-content-center">
+                <img src="img/decameron.png" class="img-fluid" style="max-width: 300px;" alt="decameron device" loading="lazy">
+            </div>
+            <div class="col d-flex flex-column justify-content-between">
+                <div class="my-3 my-lg-0">
+                    <h2 class="display-3 fw-semibold lh-1 mb-0">ready to order?</h2>
+                    <p class="fs-5 text-secondary">email us and we will arrange payment and shipping.</p>
+                </div>
+                <div class="d-grid">
+                    <a href="mailto:{{ contact_email }}?subject=decameron%20order" class="btn btn-primary btn-lg">email us</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

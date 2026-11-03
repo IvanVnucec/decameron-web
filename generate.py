@@ -11,6 +11,7 @@ BUILD_DIR = ROOT / "build"
 CONTEXT = {
     "price": "99 €",
     "num_cams": "70,000+",
+    "contact_email": "hello@decameron.example",
 }
 
 PAGES = {
