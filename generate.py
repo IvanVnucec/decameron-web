@@ -39,12 +39,13 @@ def build():
     shutil.copytree(ROOT / "css", BUILD_DIR / "css")
     shutil.copytree(ROOT / "img", BUILD_DIR / "img")
     shutil.copytree(ROOT / "js", BUILD_DIR / "js")
+    shutil.copytree(ROOT / "downloads", BUILD_DIR / "downloads")
     print("Files generated.")
 
 def watch(port):
     build()
     server = livereload.Server()
-    for path in (TEMPLATES_DIR, ROOT / "css", ROOT / "img", ROOT / "js", Path(__file__)):
+    for path in (TEMPLATES_DIR, ROOT / "css", ROOT / "img", ROOT / "js", ROOT / "downloads", Path(__file__)):
         server.watch(path, build, delay=1.0)
     server.serve(port=port, root=BUILD_DIR, open_url_delay=0.5)
 

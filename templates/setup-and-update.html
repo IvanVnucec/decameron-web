@@ -3,12 +3,68 @@
 {% block title %}decameron - setup & update{% endblock %}
 
 {% block content %}
-<h1>setup & update guide</h1>
-<p>
-    1. Download the latest decameron.uf2 file from https://ivanvnucec.github.io/decameron/
-    2. Hold the Update button (on the right side) with a paperclip.
-    3. Plug the device into your PC — it will appear as a USB drive.
-    4. Drag & drop the decameron.uf2 file onto it.
-    5. Wait 15–30 seconds — the device will restart with the new firmware.
-</p>
+
+<div class="container-fluid bg-body text-body" data-bs-theme="light">
+    <div class="container py-5">
+        <div class="row gx-5 gy-4 align-items-center">
+            <div class="col-lg-7">
+                <h2 class="display-3 fw-semibold lh-1 mb-4">first setup</h2>
+                <ol class="fs-5">
+                    <li class="py-1">connect the device to any USB-C power source</li>
+                    <li class="py-1">place it on or near the dashboard, speaker facing down</li>
+                    <li class="py-1">wait for the first GPS fix — about 30 seconds, GPS LED turns from red to green</li>
+                    <li class="py-1">adjust the volume wheel if needed</li>
+                </ol>
+                <p class="fs-5 text-secondary mb-0">no app, no pairing, no configuration. that is the whole setup.</p>
+            </div>
+            <div class="col-lg-5">
+                <img src="https://placehold.co/650x500" class="img-fluid w-100" alt="decameron first setup" loading="lazy">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid bg-body text-body" data-bs-theme="dark">
+    <div class="container py-5">
+        <h2 class="display-3 fw-semibold lh-1 mb-4">camera list update</h2>
+        <div class="border border-secondary rounded p-4 mb-5">
+            <div class="d-flex flex-wrap align-items-start justify-content-between gap-3 mb-3">
+                <div>
+                    <h3 class="fs-4 fw-semibold mb-1">update in your browser</h3>
+                    <p class="fs-6 text-secondary mb-0">hold the Update button on the right side with a paperclip, connect the device with a USB-C data cable, then click connect device. after it appears in the browser window, click flash device.</p>
+                </div>
+                <div class="d-flex flex-wrap gap-2">
+                    <button id="updater-connect" class="btn btn-primary btn-lg" type="button">connect device</button>
+                    <button id="updater-flash" class="btn btn-secondary btn-lg" type="button" disabled>flash device</button>
+                </div>
+            </div>
+            <p id="updater-status" class="fs-6 text-secondary mb-2" role="status" aria-live="polite">waiting for device.</p>
+            <div class="progress" role="progressbar" aria-label="update progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                <div id="updater-progress" class="progress-bar" style="width: 0%"></div>
+            </div>
+        </div>
+        <h3 class="fs-4 fw-semibold mb-3">manual update</h3>
+        <ol class="fs-5">
+            <li class="py-1">download the latest <a href="downloads/catchcam.uf2" class="link-primary"><code>catchcam.uf2</code></a> file</li>
+            <li class="py-1">hold the Update button on the right side with a paperclip</li>
+            <li class="py-1">connect the device to the computer with a USB-C data cable</li>
+            <li class="py-1">it appears as a USB drive named <code>RPI-RP2</code></li>
+            <li class="py-1">drag and drop <code>catchcam.uf2</code> onto the drive</li>
+            <li class="py-1">wait 15–30 seconds — the device restarts</li>
+            <li class="py-1">unplug it and use it as usual</li>
+        </ol>
+    </div>
+</div>
+
+<script type="module" src="js/updater.js"></script>
+<script>
+    window.addEventListener('load', () => {
+        const status = document.getElementById('updater-status');
+
+        if (status && status.textContent.trim() === 'waiting for device.') {
+            status.textContent = 'the updater script did not load. open this page over http or https, not directly from a file.';
+            status.className = 'fs-6 text-danger mb-2';
+        }
+    });
+</script>
 {% endblock %}
