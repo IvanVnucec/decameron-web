@@ -38,14 +38,15 @@ def build():
         out_path.write_text(html, encoding="utf-8")
     shutil.copytree(ROOT / "css", BUILD_DIR / "css")
     shutil.copytree(ROOT / "img", BUILD_DIR / "img")
+    shutil.copytree(ROOT / "js", BUILD_DIR / "js")
     print("Files generated.")
 
 def watch(port):
     build()
     server = livereload.Server()
-    for path in (TEMPLATES_DIR, ROOT / "css", ROOT / "img", Path(__file__)):
-        server.watch(path, build, delay=0.3)
-    server.serve(port=port, root=BUILD_DIR, open_url_delay=0.0)
+    for path in (TEMPLATES_DIR, ROOT / "css", ROOT / "img", ROOT / "js", Path(__file__)):
+        server.watch(path, build, delay=1.0)
+    server.serve(port=port, root=BUILD_DIR, open_url_delay=0.5)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Build the site; optionally watch and serve with live-reload.")
