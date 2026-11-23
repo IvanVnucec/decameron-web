@@ -3,7 +3,6 @@
 {% set active_page = "home" %}
 
 {% block head_extras %}
-<link rel="preload" as="image" href="img/decameron-hero.jpg" fetchpriority="high">
 <style>
     .hero-img {
         position: relative;
@@ -12,21 +11,32 @@
         isolation: isolate;
     }
 
+    /* the photo is a real <img> rather than a CSS background, so the browser starts loading it as soon
+       as it reads the HTML; ::before lays the dark fades over it */
+    .hero-photo,
     .hero-img::before {
-        content: "";
         position: absolute;
         inset: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    .hero-photo {
+        z-index: -2;
+        object-fit: cover;
+        object-position: 72% center;
+    }
+
+    .hero-img::before {
+        content: "";
         z-index: -1;
         background-image:
             linear-gradient(to right, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0) 40%),
-            linear-gradient(rgba(0, 0, 0, 0) 70%, rgba(0, 0, 0, 1)),
-            url("img/decameron-hero.jpg");
-        background-size: cover;
-        background-position: 72% center;
-        background-repeat: no-repeat;
+            linear-gradient(rgba(0, 0, 0, 0) 70%, rgba(0, 0, 0, 1));
     }
 
     @media (max-width: 767.98px) {
+        .hero-photo,
         .hero-img::before {
             bottom: auto;
             height: 80vh;
@@ -57,6 +67,7 @@
 {% block content %}
 {# --- hero ------------------------------------------------------------------ #}
 <div class="container-fluid px-0 text-body hero-img d-flex align-items-end" data-bs-theme="dark">
+    <img src="img/decameron-hero.jpg" class="hero-photo" alt="decameron on a car dashboard, on a mountain road by a lake" fetchpriority="high">
     <div class="d-grid p-3 p-md-5 gap-3 gap-md-5 w-100">
         <h1 class="display-5 fw-semibold mb-0 text-shadow">plug &amp; play<br>speed camera detector</h1>
         <div class="d-grid d-lg-flex column-gap-5 row-gap-2 text-nowrap text-shadow">
@@ -154,7 +165,7 @@
     {% if demo_video %}
     <video src="{{ demo_video }}" controls playsinline preload="metadata"{% if demo_poster %} poster="{{ demo_poster }}"{% endif %} aria-label="decameron demo video"></video>
     {% else %}
-    <iframe src="https://www.youtube-nocookie.com/embed/{{ video_id }}?rel=0" title="decameron demo video" allow="encrypted-media; picture-in-picture; fullscreen" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" style="border: 0;"></iframe>
+    <iframe src="https://www.youtube-nocookie.com/embed/{{ video_id }}?rel=0" title="decameron demo video" allow="picture-in-picture; fullscreen" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" style="border: 0;"></iframe>
     {% endif %}
 </div>
 {% endcall %}
