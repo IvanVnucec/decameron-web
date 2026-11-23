@@ -53,7 +53,7 @@
             <dt>volume wheel</dt>
             <dd class="text-secondary">sets how loud the voice and beeps are</dd>
             <dt>update button</dt>
-            <dd class="text-secondary mb-0">for <a href="setup-and-update.html#update">updating the camera list</a>. press it with a paperclip</dd>
+            <dd class="text-secondary mb-0">for <a href="setup-and-update#update">updating the camera list</a>. press it with a paperclip</dd>
         </dl>
     </div>
 </div>
@@ -65,7 +65,7 @@
 <div class="row row-cols-1 row-cols-md-2 g-5">
     <div class="col">
         <h3 class="fs-4 fw-semibold">fixed cameras only</h3>
-        <p class="text-secondary mb-0">It warns about fixed speed cameras mapped on OpenStreetMap. Mobile cameras, red-light cameras and average-speed sections are not in the list. <a href="camera-coverage.html" class="link-light">See what's covered</a>.</p>
+        <p class="text-secondary mb-0">It warns about fixed speed cameras mapped on OpenStreetMap. Mobile cameras, red-light cameras and average-speed sections are not in the list. <a href="camera-coverage" class="link-light">See what's covered</a>.</p>
     </div>
     <div class="col">
         <h3 class="fs-4 fw-semibold">every camera nearby, in any direction</h3>
@@ -77,7 +77,7 @@
     </div>
     <div class="col">
         <h3 class="fs-4 fw-semibold">new cameras may be missing</h3>
-        <p class="text-secondary mb-0">New cameras can appear before anyone maps them. Keep an eye on the signs, and <a href="support-and-faq.html#faq-legal" class="link-light">check the rules</a> where you drive.</p>
+        <p class="text-secondary mb-0">New cameras can appear before anyone maps them. Keep an eye on the signs, and <a href="support-and-faq#faq-legal" class="link-light">check the rules</a> where you drive.</p>
     </div>
 </div>
 {% endcall %}
@@ -101,8 +101,8 @@
         <ul class="fs-5 text-secondary mb-0">
             <li>open-source firmware, MIT licensed, on <a href="{{ github_url }}">GitHub</a></li>
             <li>every night a build server downloads every speed camera from OpenStreetMap, together with its speed limit</li>
-            <li>the list is compiled into a new firmware file. you can browse the whole list on the <a href="camera-coverage.html">coverage map</a></li>
-            <li>you <a href="setup-and-update.html#update">update your decameron</a> with one click in the browser, or by copying one file</li>
+            <li>the list is compiled into a new firmware file. you can browse the whole list on the <a href="camera-coverage">coverage map</a></li>
+            <li>you <a href="setup-and-update#update">update your decameron</a> with one click in the browser, or by copying one file</li>
         </ul>
     </div>
 </div>
@@ -111,8 +111,8 @@
 {% call m.section("dark") %}
 <h2 class="display-3 fw-semibold lh-1 mb-4">common questions</h2>
 {{ m.faq_list(["how-far", "direction", "limit", "traffic", "power", "language"], "hiwFaq") }}
-<p class="mt-4 mb-0"><a href="support-and-faq.html" class="link-body-emphasis">all questions &amp; answers →</a></p>
+<p class="mt-4 mb-0"><a href="support-and-faq" class="link-body-emphasis">all questions &amp; answers →</a></p>
 {% endcall %}
 
-{{ m.closing_cta("light", secondary_href="camera-coverage.html", secondary_label="check camera coverage") }}
+{{ m.closing_cta("light", secondary_href="camera-coverage", secondary_label="check camera coverage") }}
 {% endblock %}

@@ -35,7 +35,7 @@
         window.addEventListener('load', () => thumbs.forEach((t) => { new Image().src = t.dataset.large; }));
     });
 
-    // faq: opening support-and-faq.html#faq-<id> expands that answer
+    // faq: opening support-and-faq#faq-<id> expands that answer
     function openFromHash() {
         const target = location.hash && document.getElementById(location.hash.slice(1));
         if (!target || !target.classList.contains('accordion-item') || !window.bootstrap) return;

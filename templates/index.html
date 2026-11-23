@@ -74,8 +74,8 @@
             </div>
         </div>
         <div class="d-grid d-md-flex column-gap-4 row-gap-3">
-            <a href="camera-coverage.html" class="btn btn-primary btn-lg px-4 py-3">check camera coverage</a>
-            <a href="order.html" class="btn btn-outline-light btn-lg px-5 py-3" style="backdrop-filter: blur(8px);">order for {{ price }}</a>
+            <a href="camera-coverage" class="btn btn-primary btn-lg px-4 py-3">check camera coverage</a>
+            <a href="order" class="btn btn-outline-light btn-lg px-5 py-3" style="backdrop-filter: blur(8px);">order for {{ price }}</a>
         </div>
         <div class="d-none d-md-block fs-4 lh-1">forget the fines, enjoy the trip</div>
         <div class="d-md-none fs-6 lh-1 text-center">forget the fines, enjoy the trip</div>
@@ -137,7 +137,7 @@
             {% endfor %}
         </div>
         <div class="d-grid">
-            <a href="order.html" class="btn btn-primary btn-lg">order now for {{ price }}</a>
+            <a href="order" class="btn btn-primary btn-lg">order now for {{ price }}</a>
         </div>
     </div>
     <div class="col d-none d-md-flex flex-column justify-content-center">
@@ -154,7 +154,7 @@
     {% if demo_video %}
     <video src="{{ demo_video }}" controls playsinline preload="metadata"{% if demo_poster %} poster="{{ demo_poster }}"{% endif %} aria-label="decameron demo video"></video>
     {% else %}
-    <iframe src="https://www.youtube-nocookie.com/embed/{{ video_id }}?rel=0" title="decameron demo video" allow="encrypted-media; picture-in-picture; fullscreen" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy" style="border: 0;"></iframe>
+    <iframe src="https://www.youtube-nocookie.com/embed/{{ video_id }}?rel=0" title="decameron demo video" allow="encrypted-media; picture-in-picture; fullscreen" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" style="border: 0;"></iframe>
     {% endif %}
 </div>
 {% endcall %}
@@ -186,7 +186,7 @@
         </div>
         {% endif %}
         <div class="d-grid">
-            <a href="setup-and-update.html" class="btn btn-secondary btn-lg">see setup &amp; update guide</a>
+            <a href="setup-and-update" class="btn btn-secondary btn-lg">see setup &amp; update guide</a>
         </div>
     </div>
 </div>
@@ -198,7 +198,7 @@
 <img src="{{ coverage_image }}" width="{{ coverage_image_size.width }}" height="{{ coverage_image_size.height }}" class="img-fluid mb-1" alt="world map with every speed camera on decameron drawn as a blue dot" loading="lazy">
 <p class="small text-secondary text-end mb-3">© <a href="https://www.openstreetmap.org/copyright" class="link-secondary">OpenStreetMap contributors</a></p>
 <div class="d-grid d-xl-flex justify-content-xl-center">
-    <a href="camera-coverage.html" class="btn btn-secondary btn-lg px-2 px-lg-5">explore {{ num_cams }} speed cameras</a>
+    <a href="camera-coverage" class="btn btn-secondary btn-lg px-2 px-lg-5">explore {{ num_cams }} speed cameras</a>
 </div>
 {% endcall %}
 
@@ -206,10 +206,10 @@
 {% call m.section("dark") %}
 <h2 class="display-3 fw-semibold lh-1 mb-4">good to know</h2>
 {{ m.faq_list(["legal", "which-cameras", "subscription", "any-car"], "homeFaq") }}
-<p class="mt-4 mb-0"><a href="support-and-faq.html" class="link-body-emphasis">all questions &amp; answers →</a></p>
+<p class="mt-4 mb-0"><a href="support-and-faq" class="link-body-emphasis">all questions &amp; answers →</a></p>
 {% endcall %}
 
-{{ m.closing_cta("light", secondary_href="how-it-works.html", secondary_label="see how it works") }}
+{{ m.closing_cta("light", secondary_href="how-it-works", secondary_label="see how it works") }}
 {% endblock content %}
 
 {% block scripts %}

@@ -114,17 +114,17 @@
     </div>
 </div>
 <div class="alert alert-warning mt-5 mb-0 fs-5" role="note">
-    <strong>Before you order:</strong> some countries restrict devices that warn about speed cameras. <a href="support-and-faq.html#legal" class="alert-link">Read about the rules</a>.
+    <strong>Before you order:</strong> some countries restrict devices that warn about speed cameras. <a href="support-and-faq#legal" class="alert-link">Read about the rules</a>.
 </div>
 {% endcall %}
 
 {% call m.section("light") %}
 <h2 class="display-4 fw-semibold lh-1 mb-4">order questions</h2>
 {{ m.faq_list(["order", "payment", "shipping", "my-country", "subscription"], "orderFaq") }}
-<p class="mt-4 mb-0"><a href="support-and-faq.html" class="link-body-emphasis">all questions &amp; answers →</a></p>
+<p class="mt-4 mb-0"><a href="support-and-faq" class="link-body-emphasis">all questions &amp; answers →</a></p>
 {% endcall %}
 
-{{ m.closing_cta("dark", secondary_href="camera-coverage.html", secondary_label="check camera coverage",
+{{ m.closing_cta("dark", secondary_href="camera-coverage", secondary_label="check camera coverage",
                  heading="ready to order?", text="one email, and we take care of the rest",
                  primary_href=order_href, primary_label="order by email · " ~ price) }}
 {% endblock %}

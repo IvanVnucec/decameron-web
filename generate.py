@@ -219,9 +219,10 @@ def site_base(site_url):
 
 
 def page_urls(site_url):
-    """Each page's one official address, for canonical links and sitemap.xml. The home page is the bare
-    site address, not .../index.html; the 404 page has none, since it isn't a page of its own."""
-    return {name: site_url + ("" if name == "index.html" else name) for name in PAGES if name != "404.html"}
+    """Each page's one official address, for canonical links and sitemap.xml: the bare site address for the
+    home page and no .html for the rest (GitHub Pages serves order.html at .../order, and the pages link to
+    each other that way too). The 404 page has none, since it isn't a page of its own."""
+    return {name: site_url + ("" if name == "index.html" else name.removesuffix(".html")) for name in PAGES if name != "404.html"}
 
 
 def write_sitemap(urls, path):
@@ -301,6 +302,17 @@ def watch(port):
     build()
     server = livereload.Server()
     server.setHeader("Cache-Control", "no-cache")  # the browser re-checks every file, so it never shows an old copy
+
+    class PagesHandler(server.SFH):
+        """Serves order.html at /order, as GitHub Pages does, so the links between pages work here too."""
+
+        def parse_url_path(self, url_path):
+            path = super().parse_url_path(url_path)
+            if path and not Path(path).suffix and (Path(self.root) / f"{path}.html").is_file():
+                return f"{path}.html"
+            return path
+
+    server.SFH = PagesHandler  # after setHeader, which resets it
     for path in (TEMPLATES_DIR, ROOT / "css", ROOT / "img", ROOT / "js", VIDEO_DIR, ROOT / "mapimage.py"):
         if path.exists():
             server.watch(str(path), build, delay=1.0)
