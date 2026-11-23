@@ -1,167 +1,71 @@
 {% extends "base.html" %}
+{% import "_macros.html" as m with context %}
 {% set active_page = "camera-coverage" %}
-{% block title %}decameron - camera coverage{% endblock %}
+{% set footer_theme = "dark" %}
+{% block title %}camera coverage — decameron{% endblock %}
+{% block description %}map of all {{ num_cams_exact }} fixed speed cameras on decameron, updated daily from OpenStreetMap. zoom in on your roads before you buy.{% endblock %}
 
 {% block head_extras %}
 <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.23.0/dist/maplibre-gl.css">
-<style>
-    #coverage-map {
-        height: 72vh;
-        min-height: 480px;
-    }
-
-    @media (max-width: 767.98px) {
-        #coverage-map {
-            height: 58vh;
-            min-height: 360px;
-        }
-    }
-</style>
 {% endblock head_extras %}
 
 {% block content %}
+{% call m.section("dark") %}
+<h1 class="display-3 fw-semibold lh-1 mb-0">camera coverage</h1>
+<p class="fs-5 text-secondary mb-4">every dot is a speed camera decameron warns you about. zoom in to see the cameras near you</p>
+<div class="position-relative">
+    <div id="coverage-map" aria-label="map of every fixed speed camera on decameron"></div>
+</div>
+<noscript>
+    <p class="fs-5 text-secondary mt-3 mb-0">the map needs JavaScript. the same cameras are on <a href="https://www.openstreetmap.org/">OpenStreetMap</a>.</p>
+</noscript>
+{% endcall %}
 
-<div class="container-fluid bg-body text-body" data-bs-theme="dark">
-    <div class="container py-5">
-        <h1 class="display-3 fw-semibold lh-1 mb-3">camera coverage</h1>
-        <p class="fs-5 text-secondary mb-4">{{ num_cams }} fixed speed cameras worldwide. new cameras arrive daily; each blue dot is one camera.</p>
-        <div id="coverage-map" aria-label="map of fixed speed camera locations"></div>
-        <noscript>
-            <p class="fs-5 text-secondary mt-3 mb-0">the map needs JavaScript. camera data is also available on <a href="https://www.openstreetmap.org/" class="link-primary">OpenStreetMap</a>.</p>
-        </noscript>
+{% call m.section("light") %}
+<div class="row gx-5 gy-5">
+    <div class="col-lg-8">
+        <h2 class="display-4 fw-semibold lh-1 mb-3">where the cameras come from</h2>
+        <p class="fs-5 text-secondary">Every camera comes from <a href="https://www.openstreetmap.org/">OpenStreetMap</a>, the free map of the world made by millions of volunteers. Think of it as Wikipedia, but for maps.</p>
+        <p class="fs-5 text-secondary">Each night we download all the fixed speed cameras mapped there, together with their speed limits, and build a new camera list from them. The map above shows the same list your decameron gets with its next update.</p>
+        <p class="fs-5 text-secondary mb-0">Mobile cameras, red-light cameras and average-speed sections are not included.</p>
     </div>
 </div>
+{% endcall %}
 
-<div class="container-fluid bg-body text-body" data-bs-theme="light">
-    <div class="container py-5">
-        <h2 class="display-3 fw-semibold lh-1 mb-3">about the camera list</h2>
-        <div class="col-lg-9">
-            <p class="fs-5 mb-3">the camera list comes from <a href="https://www.openstreetmap.org/" class="link-primary">openstreetmap.org</a>, the open map maintained by drivers and mappers worldwide. new fixed speed cameras are added daily and reach the device with free updates.</p>
-            <a href="setup-and-update.html" class="btn btn-secondary btn-lg">see setup &amp; update guide</a>
-        </div>
+{% call m.section("dark", id="add-a-camera") %}
+<h2 class="display-3 fw-semibold lh-1 mb-0">missing a camera? add it.</h2>
+<p class="fs-5 text-secondary mb-5 col-lg-9">anyone can add a camera, and every decameron gets it with the next update</p>
+<div class="row row-cols-1 row-cols-md-3 g-5">
+    <div class="col">
+        <div class="display-6 fw-semibold text-secondary mb-2">1</div>
+        <h3 class="fs-4 fw-semibold">open OpenStreetMap</h3>
+        <p class="text-secondary mb-0">Create a free account on <a href="https://www.openstreetmap.org/" class="link-light">openstreetmap.org</a>. New to it? Start with the <a href="https://wiki.openstreetmap.org/wiki/Beginners%27_guide" class="link-light">beginner's guide</a>.</p>
+    </div>
+    <div class="col">
+        <div class="display-6 fw-semibold text-secondary mb-2">2</div>
+        <h3 class="fs-4 fw-semibold">add a point</h3>
+        <p class="text-secondary mb-0">Zoom to the camera, click edit, place a point on the road where the camera is, and choose “speed camera”. Add the limit as <code>maxspeed</code>, for example <code>50</code>.</p>
+    </div>
+    <div class="col">
+        <div class="display-6 fw-semibold text-secondary mb-2">3</div>
+        <h3 class="fs-4 fw-semibold">update your device</h3>
+        <p class="text-secondary mb-0">The next nightly build picks it up. <a href="setup-and-update.html" class="link-light">Update decameron</a> and the camera is on board.</p>
     </div>
 </div>
+{% endcall %}
 
-<div class="container-fluid bg-body text-body" data-bs-theme="dark">
-    <div class="container py-5">
-        <h2 class="display-3 fw-semibold lh-1 mb-4">common questions</h2>
-        <div class="accordion" id="coverageFaqAccordion">
-            <div class="accordion-item">
-                <h3 class="accordion-header">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#coverageFaq1" aria-expanded="false" aria-controls="coverageFaq1">what cameras are covered?</button>
-                </h3>
-                <div id="coverageFaq1" class="accordion-collapse collapse" data-bs-parent="#coverageFaqAccordion">
-                    <div class="accordion-body">fixed speed cameras only. red-light cameras, average-speed sections, and mobile cameras are not included.</div>
-                </div>
-            </div>
-            <div class="accordion-item">
-                <h3 class="accordion-header">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#coverageFaq2" aria-expanded="false" aria-controls="coverageFaq2">a camera is missing or wrong — how do i fix it?</button>
-                </h3>
-                <div id="coverageFaq2" class="accordion-collapse collapse" data-bs-parent="#coverageFaqAccordion">
-                    <div class="accordion-body">camera data is open and community maintained. if a camera is missing or a speed limit is wrong, you can fix it on <a href="https://www.openstreetmap.org/">OpenStreetMap</a>. corrections are picked up in a future update.</div>
-                </div>
-            </div>
-            <div class="accordion-item">
-                <h3 class="accordion-header">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#coverageFaq3" aria-expanded="false" aria-controls="coverageFaq3">are speed limits included?</button>
-                </h3>
-                <div id="coverageFaq3" class="accordion-collapse collapse" data-bs-parent="#coverageFaqAccordion">
-                    <div class="accordion-body">yes. when decameron warns you about a camera, it also announces the camera's speed limit. if a limit is wrong or missing, you can fix it on <a href="https://www.openstreetmap.org/">OpenStreetMap</a>.</div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+{% call m.section("light") %}
+<h2 class="display-3 fw-semibold lh-1 mb-4">common questions</h2>
+{{ m.faq_list(["which-cameras", "my-country", "direction"], "coverageFaq") }}
+<p class="mt-4 mb-0"><a href="support-and-faq.html" class="link-body-emphasis">all questions &amp; answers →</a></p>
+{% endcall %}
 
-<div class="container-fluid bg-body text-body" data-bs-theme="light">
-    <div class="container py-5">
-        <div class="row">
-            <div class="col-lg-4 d-flex justify-content-center">
-                <img src="img/decameron.png" class="img-fluid" style="max-width: 300px;" alt="decameron device" loading="lazy">
-            </div>
-            <div class="col d-flex flex-column justify-content-between">
-                <div class="my-3 my-lg-0">
-                    <h2 class="display-3 fw-semibold lh-1 mb-0">ready for a peaceful ride with decameron?</h2>
-                    <p class="fs-5 text-secondary">simple speed camera detector with free updates forever</p>
-                </div>
-                <div class="d-grid d-lg-flex flex-row gap-4 row-gap-3">
-                    <a href="setup-and-update.html" class="flex-fill btn btn-secondary btn-lg px-2">see setup &amp; update guide</a>
-                    <a href="shop.html" class="flex-fill btn btn-primary btn-lg px-2">buy now for {{ price }}</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script defer src="https://unpkg.com/maplibre-gl@5.23.0/dist/maplibre-gl.js"></script>
-<script defer src="js/cams_list.js"></script>
-<script>
-    window.addEventListener('load', () => {
-        const mapContainer = document.getElementById('coverage-map');
-        const cams = window.cams_list || [];
-
-        if (!mapContainer || !cams.length) {
-            console.warn('Map container or cams_list not found.');
-            return;
-        }
-
-        const camerasGeoJSON = {
-            type: 'FeatureCollection',
-            features: cams.map((cam) => ({
-                type: 'Feature',
-                geometry: {
-                    type: 'Point',
-                    coordinates: [cam.lng, cam.lat]
-                },
-                properties: {}
-            }))
-        };
-
-        const map = new maplibregl.Map({
-            container: 'coverage-map',
-            style: 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json',
-            center: [15, 45],
-            zoom: 1.4,
-            minZoom: 1,
-            maxZoom: 18,
-            dragRotate: false,
-            touchPitch: false
-        });
-
-        map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right');
-        map.addControl(new maplibregl.ScaleControl({ maxWidth: 100, unit: 'metric' }), 'bottom-left');
-
-        map.on('load', () => {
-            map.addSource('cameras', {
-                type: 'geojson',
-                data: camerasGeoJSON
-            });
-
-            map.addLayer({
-                id: 'cameras',
-                type: 'circle',
-                source: 'cameras',
-                paint: {
-                    'circle-radius': [
-                        'interpolate',
-                        ['linear'],
-                        ['zoom'],
-                        1, 1.2,
-                        4, 2,
-                        8, 3,
-                        12, 5,
-                        16, 8
-                    ],
-                    'circle-color': '#38bdf8',
-                    'circle-opacity': 0.85,
-                    'circle-stroke-color': '#0ea5e9',
-                    'circle-stroke-width': 0.4
-                }
-            });
-        });
-
-        window.addEventListener('resize', () => map.resize());
-    });
-</script>
+{{ m.closing_cta("dark", secondary_href="setup-and-update.html#update", secondary_label="see how updates work",
+                 heading="found your cameras?", text="updating takes one click, and it's free forever") }}
 {% endblock %}
+
+{% block scripts %}
+<script defer src="https://unpkg.com/maplibre-gl@5.23.0/dist/maplibre-gl.js"></script>
+<script defer src="js/cams.js"></script>
+<script defer src="{{ asset('js/coverage-map.js') }}"></script>
+{% endblock scripts %}

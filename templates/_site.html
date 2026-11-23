@@ -1,0 +1,27 @@
+{#- site facts: the price, contact details and product facts the pages share. change one here and
+    every page that mentions it follows. -#}
+
+{#- order and contact -#}
+{% set price = "99 €" %}
+{% set contact_email = "vnucec.ivan@gmail.com" %}
+{% set payment_methods = "Revolut or bank transfer" %}
+{% set seller = "Ivan Vnučec, Zagreb, Croatia" %}
+
+{#- shipping, returns and warranty -#}
+{% set dispatch_time = "within 2 working days of payment" %}
+{% set returns_policy = "Returns are accepted only for damage on arrival. Report it by email within 14 days of delivery." %}
+{% set warranty = "1-year limited warranty against hardware defects" %}
+
+{#- the device -#}
+{% set dimensions = "65 × 65 × 20 mm" %}
+{% set cable = "1 meter USB-A to USB-C cable" %}
+{% set operating_temp = "typical car dashboard temperatures" %}
+{% set alert_radius_m = 350 %}{# the shortest warning distance, in metres (firmware CAM_WRN_MIN_DIST_M) #}
+{% set alert_lookahead_s = 20 %}{# at higher speeds it warns this many seconds ahead instead (CAM_WRN_LOOKAHEAD_S) #}
+{% set beep_min_speed_kmh = 10 %}{# below this speed it stays quiet #}
+
+{#- links -#}
+{% set site_url = "https://ivanvnucec.github.io/decameron-web/" %}{# the site's own full address: canonical links, sitemap.xml, link previews and the 404 page use it #}
+{% set github_url = "https://github.com/IvanVnucec/catchcam" %}
+{% set blog_url = "https://ivanvnucec.github.io/tags/#catchcam" %}
+{% set video_id = "nnDtqLqS56w" %}{# YouTube demo, used until video/demo.mp4 exists #}

@@ -1,6 +1,50 @@
 {% extends "base.html" %}
+{% import "_macros.html" as m with context %}
+{% import "_faq.html" as faq with context %}
 {% set active_page = "support-and-faq" %}
-{% block title %}decameron - support & faq{% endblock %}
+{% set footer_theme = "dark" %}{# same as the contact section #}
+{% block title %}support & faq — decameron{% endblock %}
+{% block description %}answers about decameron: legality, coverage, updates, troubleshooting, ordering and warranty.{% endblock %}
 
 {% block content %}
+{% call m.section("dark") %}
+<h1 class="display-3 fw-semibold lh-1 mb-0">support &amp; faq</h1>
+<div class="row gx-5 gy-4">
+    <div class="col-lg-7">
+        <p class="fs-4 text-secondary mb-2">everything people ask about decameron, in one place</p>
+        <p class="fs-5 mb-0">can't find your answer? <a href="#contact" class="link-light">get in touch</a></p>
+    </div>
+</div>
+{% endcall %}
+
+{% for gid, title in faq.groups.items() %}
+{#- every topic on white, one after another -#}
+{% call m.section("light", id=gid) %}
+<h2 class="display-5 fw-semibold lh-1 mb-4">{{ title }}</h2>
+{#- not "faq-" ~ gid: the questions themselves get faq-<id> anchors, and the "legal" group has a "legal" question -#}
+{{ m.faq_list(faq.by_group[gid], gid ~ "-questions", anchors=True) }}
+{% endcall %}
+{% endfor %}
+
+{% call m.section("dark", id="contact") %}
+<h2 class="display-5 fw-semibold lh-1 mb-4">get in touch</h2>
+<div class="row row-cols-1 row-cols-md-3 g-5">
+    <div class="col">
+        <h3 class="fs-4 fw-semibold">email</h3>
+        <p class="fs-5 text-secondary mb-0"><a href="mailto:{{ contact_email }}" class="link-light">{{ contact_email }}</a>. for a problem, tell us what the LEDs are doing and what you hear when you plug it in.</p>
+    </div>
+    <div class="col">
+        <h3 class="fs-4 fw-semibold">bugs &amp; ideas</h3>
+        <p class="fs-5 text-secondary mb-0">open an issue on <a href="{{ github_url }}/issues" class="link-light">GitHub</a>. the firmware is open, so pull requests are welcome too.</p>
+    </div>
+    <div class="col">
+        <h3 class="fs-4 fw-semibold">camera data</h3>
+        <p class="fs-5 text-secondary mb-0">missing or wrong camera? fix it on OpenStreetMap; <a href="camera-coverage.html#add-a-camera" class="link-light">here's how</a>.</p>
+    </div>
+</div>
+{% endcall %}
 {% endblock %}
+
+{% block scripts %}
+<script src="{{ asset('js/site.js') }}"></script>
+{% endblock scripts %}

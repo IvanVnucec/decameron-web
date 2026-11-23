@@ -1,141 +1,118 @@
 {% extends "base.html" %}
+{% import "_macros.html" as m with context %}
 {% set active_page = "how-it-works" %}
-{% block title %}decameron - how it works{% endblock %}
+{% block title %}how it works — decameron{% endblock %}
+{% block description %}how decameron warns you about speed cameras: GPS, an on-device camera list, voice and LED alerts about {{ alert_lookahead_s }} seconds before each camera, and over-the-limit beeps.{% endblock %}
 
 {% block content %}
-
-<div class="container-fluid bg-body text-body" data-bs-theme="dark">
-    <div class="container py-5">
-        <h1 class="display-3 fw-semibold lh-1 mb-3">how it works</h1>
-        <div class="col-lg-9">
-            <p class="fs-5 mb-3">the camera locations are stored on the device. GPS tells the device where it is on the road. when it gets close to a camera, it warns you with a light and a voice.</p>
-            <p class="fs-5 text-secondary mb-0">it doesn't need a phone, an app, or an internet connection — just a USB-C power source.</p>
-        </div>
+{% call m.section("dark") %}
+<h1 class="display-3 fw-semibold lh-1 mb-0">how it works</h1>
+<p class="fs-5 text-secondary mb-5 col-lg-9">the camera locations are stored on the device. GPS tells the device where it is on the road. when it gets close to a camera, it warns you with a light and a voice</p>
+{#- on-a-drive / lights-and-sounds: older links (support page, setup page, FAQ, the device section) land on the steps -#}
+<div class="row gx-5 gy-5 align-items-center" id="on-a-drive">
+    <div class="col-lg-6 order-lg-2">
+        <img src="https://placehold.co/800x450" class="img-fluid w-100" alt="short video or photo sequence: decameron on the dashboard as the car approaches a camera, camera LED flashing" loading="lazy">
+    </div>
+    <div class="col-lg-6">
+        <ol class="steps fs-5 mb-0" id="lights-and-sounds">
+            <li>
+                <h2 class="fs-5 fw-semibold mb-1">plug it in</h2>
+                <p class="text-secondary mb-0">A start-up sound, then <span class="voice">“searching for a GPS signal”</span>. The status LED blinks green to show decameron is running, and the GPS LED stays red until it finds satellites.</p>
+            </li>
+            <li>
+                <h2 class="fs-5 fw-semibold mb-1">GPS found</h2>
+                <p class="text-secondary mb-0">Usually within about 30 seconds you hear <span class="voice">“GPS signal acquired”</span> and the GPS LED turns green: decameron is now watching the road.</p>
+            </li>
+            <li>
+                <h2 class="fs-5 fw-semibold mb-1">camera ahead</h2>
+                <p class="text-secondary mb-0">About {{ alert_lookahead_s }} seconds before a camera: <span class="voice">“warning, speed camera ahead, limit fifty”</span>, and the camera LED flashes. Then it keeps beeping: <strong>three beeps</strong> if you're over the limit, <strong>one</strong> if you're under.</p>
+            </li>
+            <li>
+                <h2 class="fs-5 fw-semibold mb-1">camera passed</h2>
+                <p class="text-secondary mb-0">As soon as you're moving away from the camera the beeps stop, and decameron waits for the next one.</p>
+            </li>
+        </ol>
     </div>
 </div>
+{% endcall %}
 
-<div class="container-fluid bg-body text-body" data-bs-theme="light">
-    <div class="container py-5">
-        <h2 class="display-3 fw-semibold lh-1 mb-3">what happens on a drive</h2>
-        <p class="fs-5 text-secondary mb-4">from the moment you plug it in to the moment you pass a camera.</p>
-        <div class="row gx-5 gy-4 align-items-start">
-            <div class="col-lg-6">
-                <div class="ratio ratio-16x9 bg-black">
-                    <img src="https://placehold.co/1280x720" class="w-100 h-100 object-fit-cover" alt="decameron warning sequence video" loading="lazy">
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <ol class="fs-5 mb-0 d-flex flex-column gap-4">
-                    <li>
-                        <div class="fw-semibold">plug it in</div>
-                        <p class="text-secondary mb-0">it starts looking for GPS. the first fix takes about 30 seconds — the GPS LED turns from red to green once the signal is found.</p>
-                    </li>
-                    <li>
-                        <div class="fw-semibold">while you drive</div>
-                        <p class="text-secondary mb-0">a blinking green status LED means it's working.</p>
-                    </li>
-                    <li>
-                        <div class="fw-semibold">camera ahead</div>
-                        <p class="text-secondary mb-0">the blue LED starts flashing and a voice announces the camera's speed limit.</p>
-                    </li>
-                    <li>
-                        <div class="fw-semibold">inside the camera radius</div>
-                        <p class="text-secondary mb-0">it beeps. faster beeping means you're above the limit, slower means you're below it.</p>
-                    </li>
-                    <li>
-                        <div class="fw-semibold">after you pass the camera</div>
-                        <p class="text-secondary mb-0">the warning stops and it's looking for the next camera.</p>
-                    </li>
-                </ol>
-            </div>
-        </div>
+{% call m.section("light", id="the-device") %}
+<h2 class="display-3 fw-semibold lh-1 mb-4">the device</h2>
+<div class="row gx-5 gy-4 align-items-center">
+    <div class="col-lg-6">
+        <img src="https://placehold.co/800x600" class="img-fluid w-100" alt="labelled photo of the device: USB-C port, update button, volume wheel, the three LEDs, speaker side" loading="lazy">
+    </div>
+    <div class="col-lg-6">
+        <dl class="fs-5 mb-0">
+            <dt>USB-C port</dt>
+            <dd class="text-secondary">power in the car, and updates from a computer</dd>
+            <dt>three LEDs</dt>
+            <dd class="text-secondary">status, GPS and camera</dd>
+            <dt>speaker</dt>
+            <dd class="text-secondary">voice alerts and beeps</dd>
+            <dt>volume wheel</dt>
+            <dd class="text-secondary">sets how loud the voice and beeps are</dd>
+            <dt>update button</dt>
+            <dd class="text-secondary mb-0">for <a href="setup-and-update.html#update">updating the camera list</a>. press it with a paperclip</dd>
+        </dl>
     </div>
 </div>
+{% endcall %}
 
-<div class="container-fluid bg-body text-body" data-bs-theme="dark">
-    <div class="container py-5">
-        <h2 class="display-3 fw-semibold lh-1 mb-4">installation takes a minute</h2>
-        <div class="row gx-5 gy-4 align-items-center">
-            <div class="col-lg-7">
-                <div class="mb-4">
-                    <h3 class="fs-5 fw-semibold mb-1">first setup</h3>
-                    <p class="fs-5 text-secondary mb-0">connect the device to any USB-C power source and place it on or near the dashboard, speaker facing down. that's it — no app, no pairing, no configuration. if the sound is too loud or too quiet, turn the volume wheel on the side.</p>
-                </div>
-                <div class="mb-4">
-                    <h3 class="fs-5 fw-semibold mb-1">keeping it current</h3>
-                    <p class="fs-5 text-secondary mb-0">the camera list is open data from OpenStreetMap, with new cameras added daily. updating takes less than a minute: download the latest file, copy it to the device, and it restarts. no account, no subscription, no internet on the device.</p>
-                </div>
-                <a href="setup-and-update.html" class="btn btn-secondary btn-lg">see setup &amp; update guide</a>
-            </div>
-            <div class="col-lg-5">
-                <img src="https://placehold.co/650x650" class="img-fluid w-100" alt="decameron installed on a dashboard" loading="lazy">
-            </div>
-        </div>
+{% call m.section("dark", id="good-to-know") %}
+<h2 class="display-3 fw-semibold lh-1 mb-0">good to know</h2>
+<p class="fs-5 text-secondary mb-5 col-lg-9">what decameron does and doesn't do</p>
+<div class="row row-cols-1 row-cols-md-2 g-5">
+    <div class="col">
+        <h3 class="fs-4 fw-semibold">fixed cameras only</h3>
+        <p class="text-secondary mb-0">It warns about fixed speed cameras mapped on OpenStreetMap. Mobile cameras, red-light cameras and average-speed sections are not in the list. <a href="camera-coverage.html" class="link-light">See what's covered</a>.</p>
+    </div>
+    <div class="col">
+        <h3 class="fs-4 fw-semibold">every camera nearby, in any direction</h3>
+        <p class="text-secondary mb-0">It warns about every camera it gets close to, including ones facing the other way or on a road next to yours. Better one warning too many than one too few.</p>
+    </div>
+    <div class="col">
+        <h3 class="fs-4 fw-semibold">needs a view of the sky</h3>
+        <p class="text-secondary mb-0">GPS works through a normal windscreen. Tunnels and garages block it; decameron tells you when the signal is lost and when it's back.</p>
+    </div>
+    <div class="col">
+        <h3 class="fs-4 fw-semibold">new cameras may be missing</h3>
+        <p class="text-secondary mb-0">New cameras can appear before anyone maps them. Keep an eye on the signs, and <a href="support-and-faq.html#faq-legal" class="link-light">check the rules</a> where you drive.</p>
     </div>
 </div>
+{% endcall %}
 
-<div class="container-fluid bg-body text-body" data-bs-theme="light">
-    <div class="container py-5">
-        <h2 class="display-3 fw-semibold lh-1 mb-3">fixed speed cameras</h2>
-        <div class="col-lg-9">
-            <p class="fs-5 text-secondary mb-4">the speed camera list is stored on the device and covers {{ num_cams }} locations worldwide. new cameras arrive with free updates. the <a href="setup-and-update.html" class="link-primary">setup &amp; update guide</a> explains how to update the list. coverage varies by country.</p>
-            <a href="camera-coverage.html" class="btn btn-secondary btn-lg">check camera coverage</a>
-        </div>
+{% call m.section("light", id="under-the-hood") %}
+<h2 class="display-3 fw-semibold lh-1 mb-4">under the hood</h2>
+<div class="row gx-5 gy-4">
+    <div class="col-lg-6">
+        <h3 class="fs-4 fw-semibold">hardware</h3>
+        <ul class="fs-5 text-secondary mb-0">
+            <li>Raspberry Pi RP2040 microcontroller</li>
+            <li>GPS receiver</li>
+            <li>16 MB flash memory holding the firmware and the full camera list</li>
+            <li>speaker, with a volume wheel</li>
+            <li>status, GPS and camera LEDs</li>
+            <li>USB-C for power and updates</li>
+        </ul>
+    </div>
+    <div class="col-lg-6">
+        <h3 class="fs-4 fw-semibold">software &amp; data</h3>
+        <ul class="fs-5 text-secondary mb-0">
+            <li>open-source firmware, MIT licensed, on <a href="{{ github_url }}">GitHub</a></li>
+            <li>every night a build server downloads every speed camera from OpenStreetMap, together with its speed limit</li>
+            <li>the list is compiled into a new firmware file. you can browse the whole list on the <a href="camera-coverage.html">coverage map</a></li>
+            <li>you <a href="setup-and-update.html#update">update your decameron</a> with one click in the browser, or by copying one file</li>
+        </ul>
     </div>
 </div>
+{% endcall %}
 
-<div class="container-fluid bg-body text-body" data-bs-theme="dark">
-    <div class="container py-5">
-        <h2 class="display-3 fw-semibold lh-1 mb-4">common questions</h2>
-        <div class="accordion" id="hiwFaqAccordion">
-            <div class="accordion-item">
-                <h3 class="accordion-header">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#hiwFaq1" aria-expanded="false" aria-controls="hiwFaq1">do i need a subscription?</button>
-                </h3>
-                <div id="hiwFaq1" class="accordion-collapse collapse" data-bs-parent="#hiwFaqAccordion">
-                    <div class="accordion-body">no. you pay once for the device, and camera updates are free forever. there is no account, no plan, and no recurring fee.</div>
-                </div>
-            </div>
-            <div class="accordion-item">
-                <h3 class="accordion-header">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#hiwFaq2" aria-expanded="false" aria-controls="hiwFaq2">can i use it in any car, or move it between cars?</button>
-                </h3>
-                <div id="hiwFaq2" class="accordion-collapse collapse" data-bs-parent="#hiwFaqAccordion">
-                    <div class="accordion-body">yes. it only needs a USB-C power source. there is no pairing and nothing is tied to a specific car, so you can move it from one vehicle to another.</div>
-                </div>
-            </div>
-            <div class="accordion-item">
-                <h3 class="accordion-header">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#hiwFaq4" aria-expanded="false" aria-controls="hiwFaq4">is it legal?</button>
-                </h3>
-                <div id="hiwFaq4" class="accordion-collapse collapse" data-bs-parent="#hiwFaqAccordion">
-                    <div class="accordion-body">decameron is a GPS navigator that compares your position with a database of publicly known fixed camera locations. it doesn't detect or jam radar. rules vary by country — please check your local laws.</div>
-                </div>
-            </div>
-        </div>
-        <div class="mt-4">
-            <a href="support-and-faq.html" class="link-light text-decoration-underline">see all support &amp; faqs</a>
-        </div>
-    </div>
-</div>
+{% call m.section("dark") %}
+<h2 class="display-3 fw-semibold lh-1 mb-4">common questions</h2>
+{{ m.faq_list(["how-far", "direction", "limit", "traffic", "power", "language"], "hiwFaq") }}
+<p class="mt-4 mb-0"><a href="support-and-faq.html" class="link-body-emphasis">all questions &amp; answers →</a></p>
+{% endcall %}
 
-<div class="container-fluid bg-body text-body" data-bs-theme="light">
-    <div class="container py-5">
-        <div class="row">
-            <div class="col-lg-4 d-flex justify-content-center">
-                <img src="img/decameron.png" class="img-fluid" style="max-width: 300px;" alt="decameron device" loading="lazy">
-            </div>
-            <div class="col d-flex flex-column justify-content-between">
-                <div class="my-3 my-lg-0">
-                    <h2 class="display-3 fw-semibold lh-1 mb-0">ready for a peaceful ride with decameron?</h2>
-                    <p class="fs-5 text-secondary">simple speed camera detector with free updates forever</p>
-                </div>
-                <div class="d-grid d-lg-flex flex-row gap-4 row-gap-3">
-                    <a href="setup-and-update.html" class="flex-fill btn btn-secondary btn-lg px-2">see setup &amp; update guide</a>
-                    <a href="shop.html" class="flex-fill btn btn-primary btn-lg px-2">buy now for {{ price }}</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+{{ m.closing_cta("light", secondary_href="camera-coverage.html", secondary_label="check camera coverage") }}
 {% endblock %}

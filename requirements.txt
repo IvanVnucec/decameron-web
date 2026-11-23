@@ -1,3 +1,4 @@
 Jinja2==3.1.6
 MarkupSafe==3.0.3
 livereload==2.7.1
+Pillow==11.3.0

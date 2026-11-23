@@ -1,9 +1,9 @@
 {% extends "base.html" %}
+{% import "_macros.html" as m with context %}
 {% set active_page = "home" %}
 
 {% block head_extras %}
 <link rel="preload" as="image" href="img/decameron-hero.jpg" fetchpriority="high">
-
 <style>
     .hero-img {
         position: relative;
@@ -33,6 +33,10 @@
         }
     }
 
+    .hero-img .text-shadow {
+        text-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
+    }
+
     .update-list {
         position: relative;
         overflow: hidden;
@@ -48,216 +52,166 @@
     }
 </style>
 {% endblock head_extras %}
-{% block body_class %}pt-0{% endblock body_class %}
+{% block body_class %}{% endblock body_class %}
 
 {% block content %}
+{# --- hero ------------------------------------------------------------------ #}
 <div class="container-fluid px-0 text-body hero-img d-flex align-items-end" data-bs-theme="dark">
     <div class="d-grid p-3 p-md-5 gap-3 gap-md-5 w-100">
-        <div style="text-shadow: 0px 0px 6px rgba(0,0,0,0.5);">
-            <h1 class="display-5 fw-semibold mb-0">plug &amp; play<br>speed camera detector</h1>
-        </div>
-        <div class="d-grid d-md-flex column-gap-5 text-nowrap" style="text-shadow: 0px 0px 6px rgba(0,0,0,0.5);">
+        <h1 class="display-5 fw-semibold mb-0 text-shadow">plug &amp; play<br>speed camera detector</h1>
+        <div class="d-grid d-lg-flex column-gap-5 row-gap-2 text-nowrap text-shadow">
             <div>
-                <div class="fs-2">{{ num_cams }}</div>
-                <div class="fs-6">speed cameras</div>
+                <div class="fs-1">{{ num_cams }}</div>
+                <div class="fs-6">fixed speed cameras worldwide</div>
             </div>
             <div>
-                <div class="fs-2">daily updates</div>
-                <div class="fs-6">free forever</div>
+                <div class="fs-1">daily updates</div>
+                <div class="fs-6">free forever, over USB</div>
             </div>
             <div>
-                <div class="fs-2">100% offline</div>
-                <div class="fs-6">no network required</div>
+                <div class="fs-1">100% offline</div>
+                <div class="fs-6">no phone, no app, no account</div>
             </div>
         </div>
         <div class="d-grid d-md-flex column-gap-4 row-gap-3">
             <a href="camera-coverage.html" class="btn btn-primary btn-lg px-4 py-3">check camera coverage</a>
-            <a href="shop.html" class="btn btn-outline-light btn-lg px-5 py-3" style="backdrop-filter: blur(8px);">order now</a>
+            <a href="order.html" class="btn btn-outline-light btn-lg px-5 py-3" style="backdrop-filter: blur(8px);">order for {{ price }}</a>
         </div>
-        <div class="d-none d-md-block fs-4 lh-1 text-center text-md-start">forget the fines, enjoy the trip</div>
-        <div class="d-md-none fs-6 lh-1 text-center text-md-start">forget the fines, enjoy the trip</div>
+        <div class="d-none d-md-block fs-4 lh-1">forget the fines, enjoy the trip</div>
+        <div class="d-md-none fs-6 lh-1 text-center">forget the fines, enjoy the trip</div>
     </div>
 </div>
 
-<div class="container-fluid bg-body text-body" data-bs-theme="dark">
-    <div class="container py-5">
-        <div class="row row-cols-md-2 row-cols-1">
-            <div class="col d-flex flex-column justify-content-between row-gap-5">
-                <div>
-                    <h2 class="display-3 fw-semibold lh-1 mb-0">meet decameron</h2>
-                    <p class="fs-5 text-secondary mb-0">speed camera detector that works 100% offline: no apps, no internet, no location tracking</p>
-                </div>
-                <div class="col d-flex d-md-none flex-column gap-3">
-                    <div>
-                        <img src="https://placehold.co/660x440" class="img-fluid" alt="decameron device demo" loading="lazy">
-                    </div>
-                    <div class="d-flex flex-row justify-content-center gap-3">
-                        <div>
-                            <img src="https://placehold.co/100x100" class="img-fluid" alt="feature detail 1" loading="lazy">
-                        </div>
-                        <div>
-                            <img src="https://placehold.co/100x100" class="img-fluid" alt="feature detail 2" loading="lazy">
-                        </div>
-                        <div>
-                            <img src="https://placehold.co/100x100" class="img-fluid" alt="feature detail 3" loading="lazy">
-                        </div>
-                        <div>
-                            <img src="https://placehold.co/100x100" class="img-fluid" alt="feature detail 4" loading="lazy">
-                        </div>
-                    </div>
-                </div>
-                <div class="row row-cols-xxl-2 row-cols-1 row-gap-4 row-gap-xxl-5">
-                    <div class="col">
-                        <div class="row">
-                            <div class="col-2 col-xxl-3">
-                                <img src="img/alert.svg" class="w-100" alt="" loading="lazy">
-                            </div>
-                            <div class="col d-flex align-items-center fs-5">visual &amp; voice alerts</div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="row">
-                            <div class="col-2 col-xxl-3">
-                                <img src="img/camera.svg" class="w-100" alt="" loading="lazy">
-                            </div>
-                            <div class="col d-flex align-items-center fs-5">{{ num_cams }} speed cameras</div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="row">
-                            <div class="col-2 col-xxl-3">
-                                <img src="img/update.svg" class="w-100" alt="" loading="lazy">
-                            </div>
-                            <div class="col d-flex align-items-center fs-5">free daily updates</div>
-                        </div>
+{# --- what it does ------------------------------------------------------- #}
+{% set features = [
+    ("img/alert.svg", "visual & voice alerts", "speaks the limit before every camera"),
+    ("img/camera.svg", num_cams ~ " speed cameras", "fixed cameras worldwide, and growing"),
+    ("img/update.svg", "free daily updates", "a fresh camera list every day, over USB"),
+    ("img/usb-c.svg", "USB-C powered", "works from any car USB port"),
+] %}
+{# gallery photos: (large 660x440, thumbnail 100x100, alt). keep every large photo at 3:2 so the swap doesn't jump #}
+{% set photos = [
+    ("https://placehold.co/660x440?text=photo+1", "https://placehold.co/100x100?text=1", "decameron device"),
+    ("https://placehold.co/660x440?text=photo+2", "https://placehold.co/100x100?text=2", "decameron detail 2"),
+    ("https://placehold.co/660x440?text=photo+3", "https://placehold.co/100x100?text=3", "decameron detail 3"),
+    ("https://placehold.co/660x440?text=photo+4", "https://placehold.co/100x100?text=4", "decameron detail 4"),
+] %}
+{# hover (or tap, on phones) a thumbnail to show it large; see js/site.js #}
+{% set gallery %}
+<div class="d-flex flex-column gap-3" data-gallery>
+    <div>
+        <img src="{{ photos[0][0] }}" width="660" height="440" class="img-fluid w-100" alt="{{ photos[0][2] }}" loading="lazy" data-gallery-main>
+    </div>
+    <div class="d-flex flex-row justify-content-center gap-3">
+        {% for large, thumb, alt in photos %}
+        <button type="button" class="gallery-thumb{% if loop.first %} active{% endif %}" data-large="{{ large }}" data-alt="{{ alt }}" aria-label="show photo {{ loop.index }}" aria-pressed="{{ 'true' if loop.first else 'false' }}">
+            <img src="{{ thumb }}" width="100" height="100" class="img-fluid" alt="" loading="lazy">
+        </button>
+        {% endfor %}
+    </div>
+</div>
+{% endset %}
+{% call m.section("dark") %}
+<div class="row row-cols-md-2 row-cols-1">
+    <div class="col d-flex flex-column justify-content-between row-gap-5">
+        <div>
+            <h2 class="display-3 fw-semibold lh-1 mb-0">meet decameron</h2>
+            <p class="fs-5 text-secondary mb-0">speed camera detector that works 100% offline: no apps, no internet, no location tracking</p>
+        </div>
+        <div class="col d-md-none">
+            {{ gallery }}
+        </div>
+        <div class="row row-cols-xxl-2 row-cols-1 row-gap-4 row-gap-xxl-5">
+            {% for icon, label, text in features %}
+            <div class="col">
+                <div class="row">
+                    <div class="col-2 col-xxl-3">
+                        <img src="{{ icon }}" class="w-100" alt="" loading="lazy">
                     </div>
                     <div class="col">
-                        <div class="row">
-                            <div class="col-2 col-xxl-3">
-                                <img src="img/usb-c.svg" class="w-100" alt="" loading="lazy">
-                            </div>
-                            <div class="col d-flex align-items-center fs-5">USB-C powered</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="d-grid">
-                    <a href="shop.html" class="btn btn-primary btn-lg">buy now for {{ price }}</a>
-                </div>
-            </div>
-            <div class="col d-none d-md-flex flex-column justify-content-center gap-3">
-                <div>
-                    <img src="https://placehold.co/660x440" class="img-fluid" alt="decameron device demo" loading="lazy">
-                </div>
-                <div class="d-flex flex-row justify-content-center gap-3">
-                    <div>
-                        <img src="https://placehold.co/100x100" class="img-fluid" alt="feature detail 1" loading="lazy">
-                    </div>
-                    <div>
-                        <img src="https://placehold.co/100x100" class="img-fluid" alt="feature detail 2" loading="lazy">
-                    </div>
-                    <div>
-                        <img src="https://placehold.co/100x100" class="img-fluid" alt="feature detail 3" loading="lazy">
-                    </div>
-                    <div>
-                        <img src="https://placehold.co/100x100" class="img-fluid" alt="feature detail 4" loading="lazy">
+                        <h3 class="fs-5 fw-normal mb-1">{{ label }}</h3>
+                        <p class="text-secondary mb-0">{{ text }}</p>
                     </div>
                 </div>
             </div>
+            {% endfor %}
+        </div>
+        <div class="d-grid">
+            <a href="order.html" class="btn btn-primary btn-lg">order now for {{ price }}</a>
+        </div>
+    </div>
+    <div class="col d-none d-md-flex flex-column justify-content-center">
+        {{ gallery }}
+    </div>
+</div>
+{% endcall %}
+
+{# --- video ----------------------------------------------------------- #}
+{% call m.section("light") %}
+<h2 class="display-3 fw-semibold lh-1 mb-0">see it in action</h2>
+<p class="fs-5 text-secondary mb-4">a real drive past a speed camera</p>
+<div class="ratio ratio-16x9 bg-black">
+    {% if demo_video %}
+    <video src="{{ demo_video }}" controls playsinline preload="metadata"{% if demo_poster %} poster="{{ demo_poster }}"{% endif %} aria-label="decameron demo video"></video>
+    {% else %}
+    <iframe src="https://www.youtube-nocookie.com/embed/{{ video_id }}?rel=0" title="decameron demo video" allow="encrypted-media; picture-in-picture; fullscreen" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy" style="border: 0;"></iframe>
+    {% endif %}
+</div>
+{% endcall %}
+
+{# --- updates ------------------------------------------------------------ #}
+{% call m.section("dark") %}
+<div class="row gx-5">
+    <div class="col mb-3 mb-xl-0">
+        <div class="mb-3">
+            <h2 class="display-3 fw-semibold lh-1 mb-0">simple device update</h2>
+            <p class="fs-5 text-secondary">new speed cameras each day</p>
+        </div>
+        <div>
+            <img src="https://placehold.co/650x350" class="img-fluid w-100" alt="device update steps" loading="lazy">
+        </div>
+    </div>
+    <div class="col-xl-5 d-flex flex-column justify-content-end">
+        {% set additions = (changes | selectattr("added") | list)[:7] %}
+        {% if additions %}
+        <div class="mb-3">
+            <div class="fs-5 update-list">
+                {% for c in additions %}
+                <div class="{% if loop.index > 4 %}d-none d-xl-flex{% else %}d-flex{% endif %} flex-column flex-xl-row justify-content-xl-between py-2{% if not loop.last %} border-bottom{% endif %}">
+                    <div>+{{ c.added }} new camera{{ "s" if c.added != 1 }} added</div>
+                    <div><time datetime="{{ c.time }}" data-ago>{{ c.ago }}</time></div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+        <div class="d-grid">
+            <a href="setup-and-update.html" class="btn btn-secondary btn-lg">see setup &amp; update guide</a>
         </div>
     </div>
 </div>
+{% endcall %}
 
-<div class="container-fluid bg-body text-body" data-bs-theme="light">
-    <div class="container py-5 d-flex flex-column">
-        <h2 class="display-3 fw-semibold lh-1">see it in action</h2>
-        <img src="https://placehold.co/1280x720" class="img-fluid" alt="decameron in action" loading="lazy">
-    </div>
+{# --- coverage ------------------------------------------------------------- #}
+{% call m.section("light", class="d-flex flex-column") %}
+<h2 class="display-3 fw-semibold lh-1">decameron runs <a href="{{ github_url }}" class="link-primary">open source software</a>, global coverage with no subscription—free forever</h2>
+<img src="{{ coverage_image }}" width="{{ coverage_image_size.width }}" height="{{ coverage_image_size.height }}" class="img-fluid mb-1" alt="world map with every speed camera on decameron drawn as a blue dot" loading="lazy">
+<p class="small text-secondary text-end mb-3">© <a href="https://www.openstreetmap.org/copyright" class="link-secondary">OpenStreetMap contributors</a></p>
+<div class="d-grid d-xl-flex justify-content-xl-center">
+    <a href="camera-coverage.html" class="btn btn-secondary btn-lg px-2 px-lg-5">explore {{ num_cams }} speed cameras</a>
 </div>
+{% endcall %}
 
-<div class="container-fluid bg-body text-body" data-bs-theme="dark">
-    <div class="container py-5">
-        <div class="row gx-5">
-            <div class="col mb-3 mb-xl-0">
-                <div class="mb-3">
-                    <h2 class="display-3 fw-semibold lh-1 mb-0">simple device update</h2>
-                    <p class="fs-5 text-secondary">new speed cameras each day</p>
-                </div>
-                <div>
-                    <img src="https://placehold.co/650x350" class="img-fluid w-100" alt="device update steps" loading="lazy">
-                </div>
-            </div>
-            <div class="col-xl-5 d-flex flex-column justify-content-end">
-                <div class="mb-3">
-                    <div class="fs-5 update-list">
-                        <div
-                            class="d-flex flex-column flex-xl-row justify-content-xl-between py-2 border-bottom">
-                            <div>+24 new cameras added</div>
-                            <div>33 minutes ago</div>
-                        </div>
-                        <div
-                            class="d-flex flex-column flex-xl-row justify-content-xl-between py-2 border-bottom">
-                            <div>+24 new cameras added</div>
-                            <div>1 minute ago</div>
-                        </div>
-                        <div
-                            class="d-flex flex-column flex-xl-row justify-content-xl-between py-2 border-bottom">
-                            <div>+23 new cameras added</div>
-                            <div>2 days ago</div>
-                        </div>
-                        <div
-                            class="d-flex flex-column flex-xl-row justify-content-xl-between py-2 border-bottom">
-                            <div>+45 new cameras added</div>
-                            <div>3 days ago</div>
-                        </div>
-                        <div class="d-none d-xl-flex flex-column flex-xl-row justify-content-xl-between py-2 border-bottom">
-                            <div>+12 new cameras added</div>
-                            <div>4 days ago</div>
-                        </div>
-                        <div class="d-none d-xl-flex flex-column flex-xl-row justify-content-xl-between py-2 border-bottom">
-                            <div>+67 new cameras added</div>
-                            <div>5 days ago</div>
-                        </div>
-                        <div class="d-none d-xl-flex flex-column flex-xl-row justify-content-xl-between py-2">
-                            <div>+26 new cameras added</div>
-                            <div>6 days ago</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="d-grid">
-                    <a href="setup-and-update.html" class="btn btn-secondary btn-lg">see setup &amp; update guide</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+{# --- faq teaser ---------------------------------------------------------- #}
+{% call m.section("dark") %}
+<h2 class="display-3 fw-semibold lh-1 mb-4">good to know</h2>
+{{ m.faq_list(["legal", "which-cameras", "subscription", "any-car"], "homeFaq") }}
+<p class="mt-4 mb-0"><a href="support-and-faq.html" class="link-body-emphasis">all questions &amp; answers →</a></p>
+{% endcall %}
 
-<div class="container-fluid bg-body text-body" data-bs-theme="light">
-    <div class="container py-5 d-flex flex-column">
-        <h2 class="display-3 fw-semibold lh-1">decameron runs <a href="https://github.com/IvanVnucec/catchcam" class="link-primary">open source software</a>, global coverage with no subscription—free forever</h2>
-        <img src="https://placehold.co/1300x550" class="img-fluid mb-3" alt="global speed camera coverage map" loading="lazy">
-        <div class="d-grid d-xl-flex justify-content-xl-center">
-            <a href="camera-coverage.html" class="btn btn-secondary btn-lg px-2 px-lg-5">explore {{ num_cams }} speed cameras</a>
-        </div>
-    </div>
-</div>
+{{ m.closing_cta("light", secondary_href="how-it-works.html", secondary_label="see how it works") }}
+{% endblock content %}
 
-<div class="container-fluid bg-body text-body" data-bs-theme="dark">
-    <div class="container py-5">
-        <div class="row">
-            <div class="col-lg-4 d-flex justify-content-center">
-                <img src="https://placehold.co/300x300" class="img-fluid" alt="decameron device" loading="lazy">
-            </div>
-            <div class="col d-flex flex-column justify-content-between">
-                <div class="my-3 my-lg-0">
-                    <h2 class="display-3 fw-semibold lh-1 mb-0">ready for a peaceful ride with decameron?</h2>
-                    <p class="fs-5 text-secondary">simple speed camera detector with free updates forever</p>
-                </div>
-                <div class="d-grid d-lg-flex flex-row gap-4 row-gap-3">
-                    <a href="how-it-works.html" class="flex-fill btn btn-secondary btn-lg px-2">see how it works</a>
-                    <a href="shop.html" class="flex-fill btn btn-primary btn-lg px-2">buy now for {{ price }}</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-{% endblock %}
+{% block scripts %}
+<script src="{{ asset('js/site.js') }}"></script>
+{% endblock scripts %}

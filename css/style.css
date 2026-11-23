@@ -4,3 +4,149 @@
         --bs-body-bg-rgb: 0, 0, 0;
     }
 }
+
+/* fixed navbar: keep content and anchor targets clear of it */
+.has-navbar {
+    padding-top: 57px;
+}
+
+[id] {
+    scroll-margin-top: 72px;
+}
+
+/* numbered steps */
+ol.steps {
+    list-style: none;
+    counter-reset: step;
+    padding-left: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+ol.steps > li {
+    counter-increment: step;
+    position: relative;
+    padding-left: 2.75rem;
+    min-height: 2rem;
+}
+
+ol.steps > li::before {
+    content: counter(step);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    border: 1px solid var(--bs-border-color);
+    display: grid;
+    place-items: center;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+/* coverage map */
+#coverage-map {
+    height: 72vh;
+    min-height: 480px;
+}
+
+@media (max-width: 767.98px) {
+    #coverage-map {
+        height: 62vh;
+        min-height: 360px;
+    }
+}
+
+.maplibregl-popup-content {
+    color: #000;
+    font-size: 0.95rem;
+}
+
+.maplibregl-popup-content a {
+    color: #0a58ca;
+}
+
+/* home gallery thumbnails: the one shown large is at full strength */
+.gallery-thumb {
+    flex: 0 1 100px;
+    padding: 0;
+    border: 0;
+    background: none;
+    opacity: 0.45;
+    transition: opacity 0.15s;
+}
+
+.gallery-thumb:hover,
+.gallery-thumb.active {
+    opacity: 1;
+}
+
+.gallery-thumb:focus-visible {
+    outline: 2px solid var(--bs-primary);
+    outline-offset: 2px;
+}
+
+/* faq lists: the default light divider (#dee2e6) almost vanishes on white, so match the footer line */
+[data-bs-theme="light"] .accordion {
+    --bs-accordion-border-color: var(--bs-dark-border-subtle);
+}
+
+/* words decameron speaks: italic, in the same grey as the text around them */
+.voice {
+    font-style: italic;
+}
+
+/* open questions and folds: no blue fill, blue text or blue ring, and the arrow keeps the text colour */
+.accordion {
+    --bs-accordion-active-bg: transparent;
+    --bs-accordion-active-color: var(--bs-body-color);
+    --bs-accordion-btn-focus-box-shadow: none;
+}
+
+[data-bs-theme="light"] .accordion-button::after {
+    --bs-accordion-btn-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23212529' stroke-linecap='round' stroke-linejoin='round'%3e%3cpath d='M2 5L8 11L14 5'/%3e%3c/svg%3e");
+    --bs-accordion-btn-active-icon: var(--bs-accordion-btn-icon);
+}
+
+[data-bs-theme="dark"] .accordion-button::after {
+    --bs-accordion-btn-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23dee2e6' stroke-linecap='round' stroke-linejoin='round'%3e%3cpath d='M2 5L8 11L14 5'/%3e%3c/svg%3e");
+    --bs-accordion-btn-active-icon: var(--bs-accordion-btn-icon);
+}
+
+/* keyboard users still see which question has focus */
+.accordion-button:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: -2px;
+}
+
+/* set briefly by js/updater.js while it opens and closes folds during page load */
+.no-transition,
+.no-transition::after {
+    transition: none !important;
+}
+
+/* short pages (the 404): the last section stretches so the footer sits at the bottom of the window,
+   instead of leaving white below it */
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+main > section:last-child {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+main > section:last-child > .container {
+    flex-grow: 1;
+}

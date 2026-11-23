@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+{% import "_macros.html" as m with context %}
+{% set active_page = "order" %}
+{% set footer_theme = "dark" %}
+{% set order_body = "Hi, I'd like to order decameron.\n\nQuantity: 1\nName:\nShipping address:\nCountry:\nPayment (" ~ payment_methods ~ "):\n" %}
+{% set order_href = "mailto:" ~ contact_email ~ "?subject=" ~ ("decameron order" | urlencode) ~ "&body=" ~ (order_body | urlencode) %}
+{% block title %}order — decameron{% endblock %}
+{% block description %}order decameron for {{ price }}: offline speed camera detector with {{ num_cams }} cameras, voice alerts and free updates forever. order by email, pay by {{ payment_methods }}.{% endblock %}
+
+{% block content %}
+{% call m.section("dark") %}
+<div class="row gx-5 gy-5 align-items-center">
+    <div class="col-lg-6">
+        <h1 class="display-3 fw-semibold lh-1 mb-0">decameron</h1>
+        <p class="fs-4 text-secondary mb-4">the plug &amp; play speed camera detector with {{ num_cams }} cameras on board and voice alerts</p>
+        <div class="d-flex flex-wrap align-items-baseline gap-3 mb-2">
+            <div class="display-3 fw-semibold lh-1">{{ price }}</div>
+            <div class="fs-5 text-secondary">one-time price · free updates forever · shipping confirmed by email</div>
+        </div>
+        <ul class="list-unstyled fs-5 my-4 d-flex flex-column gap-1">
+            <li>✓ no subscription, no account</li>
+            <li>✓ camera list updated daily</li>
+            <li>✓ powered over USB-C</li>
+            <li>✓ open-source firmware</li>
+        </ul>
+        <a href="{{ order_href }}" class="btn btn-primary btn-lg px-5">order by email</a>
+        <p class="text-secondary mt-3 mb-0">Opens your email app with an order form. No email app? Write to <a href="mailto:{{ contact_email }}" class="link-light">{{ contact_email }}</a>.</p>
+    </div>
+    <div class="col-lg-6">
+        <img src="https://placehold.co/800x600" class="img-fluid w-100" alt="product shot of decameron for the order page" loading="lazy">
+    </div>
+</div>
+{% endcall %}
+
+{% call m.section("light") %}
+<h2 class="display-4 fw-semibold lh-1 mb-5">how ordering works</h2>
+<div class="row row-cols-1 row-cols-md-2 row-cols-xl-4 g-5">
+    <div class="col">
+        <div class="display-6 fw-semibold text-secondary mb-2">1</div>
+        <h3 class="fs-4 fw-semibold">email us</h3>
+        <p class="text-secondary mb-0">How many you want and where they should go. The order button fills that in for you.</p>
+    </div>
+    <div class="col">
+        <div class="display-6 fw-semibold text-secondary mb-2">2</div>
+        <h3 class="fs-4 fw-semibold">we confirm the price</h3>
+        <p class="text-secondary mb-0">We reply with the final price, shipping included, and how to pay.</p>
+    </div>
+    <div class="col">
+        <div class="display-6 fw-semibold text-secondary mb-2">3</div>
+        <h3 class="fs-4 fw-semibold">pay</h3>
+        <p class="text-secondary mb-0">By {{ payment_methods }}. No card details are ever entered on this site.</p>
+    </div>
+    <div class="col">
+        <div class="display-6 fw-semibold text-secondary mb-2">4</div>
+        <h3 class="fs-4 fw-semibold">it ships</h3>
+        <p class="text-secondary mb-0">Orders leave {{ dispatch_time }}, with the newest camera list already installed.</p>
+    </div>
+</div>
+{% endcall %}
+
+{% call m.section("dark") %}
+<div class="row gx-5 gy-4 align-items-center">
+    <div class="col-lg-6">
+        <h2 class="display-4 fw-semibold lh-1 mb-4">in the box</h2>
+        <ul class="fs-5 mb-0 d-flex flex-column gap-2">
+            <li>decameron</li>
+            <li>{{ cable }}</li>
+            <li>printed setup guide</li>
+        </ul>
+    </div>
+    <div class="col-lg-6">
+        <img src="https://placehold.co/800x600" class="img-fluid w-100" alt="box contents laid out: device, cable, printed setup guide" loading="lazy">
+    </div>
+</div>
+{% endcall %}
+
+{% call m.section("light") %}
+<h2 class="display-4 fw-semibold lh-1 mb-4">specs</h2>
+<div class="row">
+    <div class="col-lg-8">
+        <dl class="row fs-5 mb-0 specs">
+            <dt class="col-sm-4">alerts</dt>
+            <dd class="col-sm-8 text-secondary">English voice with the speed limit, LEDs</dd>
+            <dt class="col-sm-4">warning distance</dt>
+            <dd class="col-sm-8 text-secondary">about {{ alert_lookahead_s }} seconds before every camera, never closer than {{ alert_radius_m }} m</dd>
+            <dt class="col-sm-4">cameras</dt>
+            <dd class="col-sm-8 text-secondary">{{ num_cams }} fixed speed cameras today, and growing</dd>
+            <dt class="col-sm-4">updates</dt>
+            <dd class="col-sm-8 text-secondary">free and daily, over USB-C</dd>
+            <dt class="col-sm-4">power</dt>
+            <dd class="col-sm-8 text-secondary">5 V over USB-C</dd>
+            <dt class="col-sm-4">controls</dt>
+            <dd class="col-sm-8 text-secondary">volume wheel</dd>
+            <dt class="col-sm-4">size</dt>
+            <dd class="col-sm-8 text-secondary">{{ dimensions }}</dd>
+        </dl>
+    </div>
+</div>
+{% endcall %}
+
+{% call m.section("dark") %}
+<div class="row gx-5 gy-5">
+    <div class="col-lg-4">
+        <h2 class="fs-3 fw-semibold">shipping</h2>
+        <p class="fs-5 text-secondary mb-0">We ship internationally. Orders leave {{ dispatch_time }}. The shipping cost depends on the destination and is confirmed before you pay. Customs duties and import taxes, if any, are set by your country and paid by you.</p>
+    </div>
+    <div class="col-lg-4">
+        <h2 class="fs-3 fw-semibold">returns</h2>
+        <p class="fs-5 text-secondary mb-0">{{ returns_policy }}</p>
+    </div>
+    <div class="col-lg-4">
+        <h2 class="fs-3 fw-semibold">warranty</h2>
+        <p class="fs-5 text-secondary mb-0">decameron comes with a {{ warranty }}. If something goes wrong, email us and we'll repair or replace it.</p>
+    </div>
+</div>
+<div class="alert alert-warning mt-5 mb-0 fs-5" role="note">
+    <strong>Before you order:</strong> some countries restrict devices that warn about speed cameras. <a href="support-and-faq.html#legal" class="alert-link">Read about the rules</a>.
+</div>
+{% endcall %}
+
+{% call m.section("light") %}
+<h2 class="display-4 fw-semibold lh-1 mb-4">order questions</h2>
+{{ m.faq_list(["order", "payment", "shipping", "my-country", "subscription"], "orderFaq") }}
+<p class="mt-4 mb-0"><a href="support-and-faq.html" class="link-body-emphasis">all questions &amp; answers →</a></p>
+{% endcall %}
+
+{{ m.closing_cta("dark", secondary_href="camera-coverage.html", secondary_label="check camera coverage",
+                 heading="ready to order?", text="one email, and we take care of the rest",
+                 primary_href=order_href, primary_label="order by email · " ~ price) }}
+{% endblock %}

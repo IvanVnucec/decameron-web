@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% import "_macros.html" as m with context %}
+{% set active_page = "" %}
+{% set footer_theme = "dark" %}
+{% block title %}page not found — decameron{% endblock %}
+{# served at any missing address, so every relative link starts from the site root #}
+{% block base_href %}<base href="{{ site_base }}">{% endblock %}
+
+{% block content %}
+{% call m.section("dark", class="d-flex flex-column justify-content-center") %}
+<h1 class="display-3 fw-semibold lh-1 mb-0">wrong turn</h1>
+<p class="fs-4 text-secondary mb-4">this page doesn't exist, or it moved</p>
+<div class="d-flex flex-wrap gap-2">
+    <a href="index.html" class="btn btn-primary btn-lg">home</a>
+    <a href="setup-and-update.html" class="btn btn-outline-light btn-lg">update your device</a>
+    <a href="support-and-faq.html" class="btn btn-outline-light btn-lg">support</a>
+</div>
+{% endcall %}
+{% endblock %}

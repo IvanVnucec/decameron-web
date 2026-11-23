@@ -1,0 +1,53 @@
+{# a full-width band; theme alternates light / dark down the page #}
+{% macro section(theme="light", id=None, class="") -%}
+<section class="container-fluid bg-body text-body" data-bs-theme="{{ theme }}"{% if id %} id="{{ id }}"{% endif %}>
+    <div class="container py-5 {{ class }}">
+        {{ caller() }}
+    </div>
+</section>
+{%- endmacro %}
+
+{# FAQ accordion of the questions in _faq.html with these ids.
+   anchors=True gives every item a stable #faq-<id> link target (support page only) #}
+{% import "_faq.html" as faq with context %}
+{% macro faq_list(ids, name, anchors=False) -%}
+<div class="accordion accordion-flush" id="{{ name }}">
+    {% for id in ids %}
+    {% if id not in faq.items %}{{ fail("no FAQ question with id '%s' in _faq.html" % id) }}{% endif %}
+    {% set f = faq.items[id] %}
+    <div class="accordion-item"{% if anchors %} id="faq-{{ id }}"{% endif %}>
+        <h3 class="accordion-header">
+            <button class="accordion-button collapsed fs-5" type="button" data-bs-toggle="collapse" data-bs-target="#{{ name }}-{{ id }}" aria-expanded="false" aria-controls="{{ name }}-{{ id }}">{{ f.q }}</button>
+        </h3>
+        <div id="{{ name }}-{{ id }}" class="accordion-collapse collapse"{% if not anchors %} data-bs-parent="#{{ name }}"{% endif %}>
+            <div class="accordion-body fs-5">{{ f.a() | trim }}</div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{%- endmacro %}
+
+{# closing call to action shared by most pages #}
+{% macro closing_cta(theme, secondary_href=None, secondary_label=None, heading="ready for a peaceful ride with decameron?", text="simple speed camera detector with free updates forever", primary_href="order.html", primary_label=None) -%}
+<section class="container-fluid bg-body text-body" data-bs-theme="{{ theme }}">
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-lg-4 d-flex justify-content-center">
+                <img src="https://placehold.co/300x300" class="img-fluid" alt="decameron device" loading="lazy">
+            </div>
+            <div class="col d-flex flex-column justify-content-between">
+                <div class="my-3 my-lg-0">
+                    <h2 class="display-3 fw-semibold lh-1 mb-0">{{ heading }}</h2>
+                    <p class="fs-5 text-secondary">{{ text }}</p>
+                </div>
+                <div class="d-grid d-lg-flex flex-row gap-4 row-gap-3">
+                    {% if secondary_href %}
+                    <a href="{{ secondary_href }}" class="flex-fill btn btn-secondary btn-lg px-2">{{ secondary_label }}</a>
+                    {% endif %}
+                    <a href="{{ primary_href }}" class="flex-fill btn btn-primary btn-lg px-2">{{ primary_label or "order now for " ~ price }}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{%- endmacro %}

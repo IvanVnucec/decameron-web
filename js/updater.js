@@ -9,6 +9,11 @@ const progressBar = document.getElementById('updater-progress');
 let picoboot = null;
 let connection = null;
 let busy = false;
+// an update just finished or failed. the device then restarts or gets unplugged, and that USB
+// disconnect must not replace "update complete" (or the error) with the hold-the-button prompt
+let keepResult = false;
+
+const IDLE_MESSAGE = 'hold the update button while you connect decameron, then click connect device.';
 
 function setStatus(message, tone = 'secondary') {
     statusElement.textContent = message;
@@ -47,8 +52,8 @@ async function checkKnownDevices() {
             connectButton.classList.remove('btn-primary');
             connectButton.classList.add('btn-success');
             await connectDevice(devices[0]);
-        } else {
-            setStatus('put the device in update mode, then click connect device.', 'secondary');
+        } else if (!keepResult) {
+            setStatus(IDLE_MESSAGE, 'secondary');
             connectButton.classList.remove('btn-success');
             connectButton.classList.add('btn-primary');
         }
@@ -63,6 +68,7 @@ async function connectDevice(device = null) {
     }
 
     busy = true;
+    keepResult = false;
     connectButton.disabled = true;
     flashButton.disabled = true;
     connectButton.classList.remove('btn-success');
@@ -73,7 +79,7 @@ async function connectDevice(device = null) {
         if (device) {
             setStatus('device found. connecting...');
         } else {
-            setStatus('browser window opened. select the RP2040 device.');
+            setStatus('choose “RP2 Boot” in the browser window.');
             device = await Picoboot.requestDevice([new Target('RP2040')]);
         }
 
@@ -85,13 +91,13 @@ async function connectDevice(device = null) {
         await connection.setExclusiveAccess(2);
         await connection.exitXip();
 
-        setStatus(`connected: ${picoboot.getTarget().toString()}`, 'success');
+        setStatus('connected. click update device.', 'success');
         flashButton.disabled = false;
     } catch (error) {
         await cleanup();
 
         if (error.message.includes('claim interface') || error.message.includes('Unable to claim interface')) {
-            setStatus('could not connect: the device is already in use by another tab or application. close picoflash or any other updater, then try again.', 'danger');
+            setStatus('could not connect: another tab or program is using the device. close it, unplug decameron and try again.', 'danger');
         } else if (error.message.includes('Access denied')) {
             setStatus('could not open the device: USB access denied. close other apps or tabs using it, then try again.', 'danger');
         } else {
@@ -113,8 +119,8 @@ async function flashDevice() {
     flashButton.disabled = true;
 
     try {
-        setStatus('downloading firmware...');
-        const response = await fetch('downloads/catchcam.uf2', { cache: 'no-store' });
+        setStatus('downloading the latest camera list...');
+        const response = await fetch(flashButton.dataset.firmware, { cache: 'no-store' });
 
         if (!response.ok) {
             throw new Error(`download failed (${response.status})`);
@@ -126,7 +132,7 @@ async function flashDevice() {
         const sectorSize = target.flashSectorSize();
         const eraseSize = Math.ceil(data.length / sectorSize) * sectorSize;
 
-        setStatus('erasing flash...');
+        setStatus('preparing the device...');
         setProgress(0);
 
         const eraseChunkSize = 64 * 1024;
@@ -137,7 +143,7 @@ async function flashDevice() {
             setProgress(Math.round(((offset + chunkSize) / eraseSize) * 10));
         }
 
-        setStatus('flashing...');
+        setStatus('writing the update. keep the cable connected...');
         const chunkSize = 64 * 1024;
 
         for (let offset = 0; offset < data.length; offset += chunkSize) {
@@ -157,10 +163,12 @@ async function flashDevice() {
         }
 
         await cleanup();
-        setStatus('update complete. the device has restarted.', 'success');
+        setStatus('update complete. decameron has restarted: unplug it and take it back to the car.', 'success');
+        keepResult = true;
     } catch (error) {
         await cleanup();
-        setStatus(`update failed: ${error.message}`, 'danger');
+        setStatus(`update failed: ${error.message}. put decameron back in update mode and try again; nothing is broken.`, 'danger');
+        keepResult = true;
     } finally {
         busy = false;
         connectButton.disabled = false;
@@ -173,14 +181,47 @@ if (!connectButton || !flashButton || !statusElement || !progressBar) {
 } else if (!('usb' in navigator) || !window.isSecureContext) {
     connectButton.disabled = true;
     flashButton.disabled = true;
-    setStatus('browser update needs Chrome or Edge on a secure connection. use the manual steps below.', 'danger');
+    setStatus('this browser can’t update over USB. use Chrome or Edge on a computer, or the manual update.', 'danger');
+    // this browser can only do the manual update: the browser fold starts closed and greyed out
+    // (Bootstrap's opacity-50; its contents also pe-none, so nothing in it can be clicked), apart from the
+    // red status line saying why, and the manual fold opens. done straight away, without animation,
+    // since this happens while the page loads
+    // the page has usually painted by now: switch off the arrow turn while the folds change, so they don't spin on load
+    const toggles = document.querySelectorAll('[data-bs-target="#browser-update-steps"], [data-bs-target="#manual-update-steps"]');
+    toggles.forEach((toggle) => toggle.classList.add('no-transition'));
+    requestAnimationFrame(() => requestAnimationFrame(() => toggles.forEach((toggle) => toggle.classList.remove('no-transition'))));
+    const browserSteps = document.getElementById('browser-update-steps');
+    browserSteps?.classList.remove('show');
+    browserSteps?.querySelectorAll('.accordion-body > :not(#updater-status)').forEach((el) => {
+        el.classList.add('opacity-50', 'pe-none', 'user-select-none');
+    });
+    document.querySelectorAll('[data-bs-target="#browser-update-steps"]').forEach((toggle) => {
+        toggle.classList.add('collapsed');
+        toggle.setAttribute('aria-expanded', 'false');
+        // grey the title, but keep the red reason next to it readable while the fold is closed
+        toggle.querySelector('[data-fold-title]')?.classList.add('opacity-50');
+    });
+    document.getElementById('updater-unsupported')?.classList.remove('d-none');
+    const manual = document.getElementById('manual-update-steps');
+    manual?.classList.add('show');
+    document.querySelectorAll('[data-bs-target="#manual-update-steps"]').forEach((toggle) => {
+        toggle.classList.remove('collapsed');
+        toggle.setAttribute('aria-expanded', 'true');
+    });
 } else {
     connectButton.addEventListener('click', () => connectDevice());
     flashButton.addEventListener('click', flashDevice);
 
     navigator.usb.addEventListener('connect', checkKnownDevices);
-    navigator.usb.addEventListener('disconnect', checkKnownDevices);
+    navigator.usb.addEventListener('disconnect', async (event) => {
+        // unplugged after connecting but before updating: let go of it, so the page stops saying "connected"
+        if (!busy && picoboot && event.device === picoboot.device) {
+            await cleanup();
+            flashButton.disabled = true;
+        }
+        checkKnownDevices();
+    });
 
-    setStatus('put the device in update mode with the paperclip, then click connect device.');
+    setStatus(IDLE_MESSAGE);
     checkKnownDevices();
 }

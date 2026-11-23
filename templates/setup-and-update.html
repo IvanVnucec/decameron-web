@@ -1,70 +1,114 @@
 {% extends "base.html" %}
+{% import "_macros.html" as m with context %}
 {% set active_page = "setup-and-update" %}
-{% block title %}decameron - setup & update{% endblock %}
+{% set footer_theme = "dark" %}
+{% block title %}setup & update — decameron{% endblock %}
+{% block description %}set up decameron in a minute and update its camera list for free: one click in Chrome or Edge, or drag and drop one file.{% endblock %}
 
 {% block content %}
-
-<div class="container-fluid bg-body text-body" data-bs-theme="light">
-    <div class="container py-5">
-        <div class="row gx-5 gy-4 align-items-center">
-            <div class="col-lg-7">
-                <h2 class="display-3 fw-semibold lh-1 mb-4">first setup</h2>
-                <ol class="fs-5">
-                    <li class="py-1">connect the device to any USB-C power source</li>
-                    <li class="py-1">place it on or near the dashboard, speaker facing down</li>
-                    <li class="py-1">wait for the first GPS fix — about 30 seconds, GPS LED turns from red to green</li>
-                    <li class="py-1">adjust the volume wheel if needed</li>
-                </ol>
-                <p class="fs-5 text-secondary mb-0">no app, no pairing, no configuration. that is the whole setup.</p>
-            </div>
-            <div class="col-lg-5">
-                <img src="https://placehold.co/650x500" class="img-fluid w-100" alt="decameron first setup" loading="lazy">
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="container-fluid bg-body text-body" data-bs-theme="dark">
-    <div class="container py-5">
-        <h2 class="display-3 fw-semibold lh-1 mb-4">camera list update</h2>
-        <div class="border border-secondary rounded p-4 mb-5">
-            <div class="d-flex flex-wrap align-items-start justify-content-between gap-3 mb-3">
-                <div>
-                    <h3 class="fs-4 fw-semibold mb-1">update in your browser</h3>
-                    <p class="fs-6 text-secondary mb-0">hold the Update button on the right side with a paperclip, connect the device with a USB-C data cable, then click connect device. after it appears in the browser window, click flash device.</p>
-                </div>
-                <div class="d-flex flex-wrap gap-2">
-                    <button id="updater-connect" class="btn btn-primary btn-lg" type="button">connect device</button>
-                    <button id="updater-flash" class="btn btn-secondary btn-lg" type="button" disabled>flash device</button>
-                </div>
-            </div>
-            <p id="updater-status" class="fs-6 text-secondary mb-2" role="status" aria-live="polite">waiting for device.</p>
-            <div class="progress" role="progressbar" aria-label="update progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-                <div id="updater-progress" class="progress-bar" style="width: 0%"></div>
-            </div>
-        </div>
-        <h3 class="fs-4 fw-semibold mb-3">manual update</h3>
-        <ol class="fs-5">
-            <li class="py-1">download the latest <a href="downloads/catchcam.uf2" class="link-primary"><code>catchcam.uf2</code></a> file</li>
-            <li class="py-1">hold the Update button on the right side with a paperclip</li>
-            <li class="py-1">connect the device to the computer with a USB-C data cable</li>
-            <li class="py-1">it appears as a USB drive named <code>RPI-RP2</code></li>
-            <li class="py-1">drag and drop <code>catchcam.uf2</code> onto the drive</li>
-            <li class="py-1">wait 15–30 seconds — the device restarts</li>
-            <li class="py-1">unplug it and use it as usual</li>
+{% call m.section("dark", id="first-setup") %}
+<div class="row gx-5 gy-4 align-items-center">
+    <div class="col-lg-7">
+        <h1 class="display-4 fw-semibold lh-1 mb-4">first setup</h1>
+        <ol class="steps fs-5 mb-0">
+            <li>
+                <h2 class="fs-5 fw-semibold mb-1">place it</h2>
+                <p class="text-secondary mb-0">On the dashboard, speaker facing down, where it can see the sky through the windscreen.</p>
+            </li>
+            <li>
+                <h2 class="fs-5 fw-semibold mb-1">plug it in</h2>
+                <p class="text-secondary mb-0">Into any USB port or USB adapter in the car. You hear a start-up sound and “searching for a GPS signal”.</p>
+            </li>
+            <li>
+                <h2 class="fs-5 fw-semibold mb-1">wait for GPS</h2>
+                <p class="text-secondary mb-0">Usually about 30 seconds; the first time can take a few minutes. You hear “GPS signal acquired” and the GPS LED turns green.</p>
+            </li>
+            <li>
+                <h2 class="fs-5 fw-semibold mb-1">set the volume</h2>
+                <p class="text-secondary mb-0">With the wheel on the side. Then drive.</p>
+            </li>
         </ol>
     </div>
+    <div class="col-lg-5">
+        <img src="https://placehold.co/800x600" class="img-fluid w-100" alt="decameron on a dashboard, plugged in, cable tucked away" loading="lazy">
+    </div>
 </div>
+{% endcall %}
 
-<script type="module" src="js/updater.js"></script>
+{% call m.section("light", id="update") %}
+<h2 class="display-4 fw-semibold lh-1 mb-0">update the camera list</h2>
+<p class="fs-5 text-secondary mb-4 col-lg-9">new cameras are added every day. updating once a month, or before a long trip, keeps your decameron up to date</p>
+
+<div class="col-lg-9">
+    {#- both ways to update are folds. when this browser can't do USB, js/updater.js greys out the
+        browser one (its status line says why) and opens the manual one -#}
+    <div class="accordion accordion-flush border border-secondary rounded overflow-hidden" id="browser-fold" style="--bs-accordion-btn-padding-x: 1.5rem; --bs-accordion-body-padding-x: 1.5rem;">
+        <div class="accordion-item" id="browser-update">
+            <h3 class="accordion-header">
+                <button class="accordion-button fs-5" type="button" data-bs-toggle="collapse" data-bs-target="#browser-update-steps" aria-expanded="true" aria-controls="browser-update-steps"><span class="d-flex flex-column"><span data-fold-title>update in your browser</span><span id="updater-unsupported" class="small text-danger mt-1 d-none">not available in this browser</span></span></button>
+            </h3>
+            <div id="browser-update-steps" class="accordion-collapse collapse show">
+                <div class="accordion-body">
+                    <p class="text-secondary mb-4">Works in Chrome, Edge and Opera on a computer. You need a USB-C data cable; some charging cables won't work.</p>
+                    <ol class="steps fs-5 mb-4">
+                        <li>With a paperclip, <strong>press and hold</strong> the update button on the right side.</li>
+                        <li>Keep holding it while you connect decameron to the computer, then let go.</li>
+                        <li>Click <strong>connect device</strong> and choose <strong>RP2 Boot</strong> in the window that opens.</li>
+                        <li>Click <strong>update device</strong> and wait for “update complete”.</li>
+                    </ol>
+                    <div class="d-flex flex-wrap gap-3 mb-3">
+                        <button id="updater-connect" class="btn btn-primary btn-lg" type="button">connect device</button>
+                        <button id="updater-flash" class="btn btn-secondary btn-lg" type="button" data-firmware="downloads/{{ firmware_file }}" disabled>update device</button>
+                    </div>
+                    <p id="updater-status" class="text-secondary mb-2" role="status" aria-live="polite">waiting for device.</p>
+                    <div class="progress" role="progressbar" aria-label="update progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                        <div id="updater-progress" class="progress-bar" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {#- manual-update: FAQ answers link here, and site.js opens the fold on arrival -#}
+    <div class="accordion accordion-flush border border-secondary rounded overflow-hidden mt-4" id="manual-fold" style="--bs-accordion-btn-padding-x: 1.5rem; --bs-accordion-body-padding-x: 1.5rem;">
+        <div class="accordion-item" id="manual-update">
+            <h3 class="accordion-header">
+                <button class="accordion-button collapsed fs-5" type="button" data-bs-toggle="collapse" data-bs-target="#manual-update-steps" aria-expanded="false" aria-controls="manual-update-steps">using Firefox or Safari? update manually</button>
+            </h3>
+            <div id="manual-update-steps" class="accordion-collapse collapse">
+                <div class="accordion-body">
+                    <ol class="steps fs-5 mb-0">
+                        <li>Download <a href="downloads/{{ firmware_file }}" download><code>{{ firmware_file }}</code></a> ({{ firmware_mb }} MB).</li>
+                        <li>Press and hold the update button with a paperclip, connect decameron to the computer, then let go.</li>
+                        <li>A USB drive called <code>RPI-RP2</code> appears.</li>
+                        <li>Drag <code>{{ firmware_file }}</code> onto it.</li>
+                        <li>Wait 15–30 seconds: the drive disappears and decameron restarts with the new list.</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endcall %}
+
+{% call m.section("dark", id="troubleshooting") %}
+<h2 class="display-4 fw-semibold lh-1 mb-4">troubleshooting</h2>
+{{ m.faq_list(["not-detected", "in-use", "browsers", "brick", "gps-red", "no-sound", "catchcam"], "updateFaq") }}
+<p class="mt-4 mb-0">still stuck? email <a href="mailto:{{ contact_email }}" class="link-light">{{ contact_email }}</a> and tell us what the LEDs are doing.</p>
+{% endcall %}
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ asset('js/site.js') }}"></script>
+<script type="module" src="{{ asset('js/updater.js') }}"></script>
 <script>
     window.addEventListener('load', () => {
         const status = document.getElementById('updater-status');
 
         if (status && status.textContent.trim() === 'waiting for device.') {
-            status.textContent = 'the updater script did not load. open this page over http or https, not directly from a file.';
-            status.className = 'fs-6 text-danger mb-2';
+            status.textContent = 'the browser updater could not start. open this page over http or https, not directly from a file, or use the manual update.';
+            status.className = 'text-danger mb-2';
         }
     });
 </script>
-{% endblock %}
+{% endblock scripts %}

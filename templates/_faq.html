@@ -1,0 +1,192 @@
+{#- every FAQ question and answer on the site.
+
+    pages show a few with m.faq_list(["legal", "subscription"], "someName"); the support page shows
+    all of them, grouped. answers are plain HTML and can use the page variables ({{ price }}, ...).
+    an answer only renders where it is shown. -#}
+
+{% set groups = {
+    "buying": "before you buy",
+    "using": "using decameron",
+    "legal": "legal & safety",
+    "updates": "updates",
+    "troubleshooting": "troubleshooting",
+    "ordering": "ordering, shipping & warranty",
+    "contributing": "cameras & contributing",
+} %}
+{% set items = {} %}
+{% set by_group = {} %}
+{% macro q(id, group, question) %}
+{% do items.update({id: {"group": group, "q": question, "a": caller}}) %}
+{% do by_group.setdefault(group, []).append(id) %}
+{% endmacro %}
+
+{# --- before you buy ------------------------------------------------------------------------ #}
+
+{% call q("subscription", "buying", "Do I need a subscription or an account?") %}
+No. You pay {{ price }} once, and camera updates are free forever.
+{% endcall %}
+
+{% call q("phone", "buying", "Do I need a phone, an app or mobile data?") %}
+No. decameron has its own GPS and camera list, and no SIM, Wi-Fi or Bluetooth.
+{% endcall %}
+
+{% call q("privacy", "buying", "Does it track me or record where I drive?") %}
+No. Your position is never stored or sent anywhere. The firmware is
+<a href="{{ github_url }}">open source</a> if you want to check.
+{% endcall %}
+
+{% call q("which-cameras", "buying", "Which cameras does it warn about?") %}
+Fixed speed cameras from OpenStreetMap, {{ num_cams_exact }} worldwide. Mobile, red-light and
+average-speed cameras are not included.
+{% endcall %}
+
+{% call q("my-country", "buying", "Will it work in my country?") %}
+It works anywhere GPS works, but coverage depends on OpenStreetMap. Check the
+<a href="camera-coverage.html">coverage map</a> for your area before you buy.
+{% endcall %}
+
+{% call q("any-car", "buying", "Does it work in any car? Can I move it between cars?") %}
+Yes. It only needs a USB port or a 12 V USB adapter, and nothing is tied to one car.
+{% endcall %}
+
+{% call q("language", "buying", "What language does it speak?") %}
+English. More languages are on the way.
+{% endcall %}
+
+{# --- using decameron ----------------------------------------------------------------------- #}
+
+{% call q("how-far", "using", "How far ahead does it warn me?") %}
+About {{ alert_lookahead_s }} seconds before the camera, and never closer than {{ alert_radius_m }} metres.
+At 100 km/h that's around {{ (100 / 3.6 * alert_lookahead_s) | round(-1) | int }} m.
+{% endcall %}
+
+{% call q("direction", "using", "Why did it warn me about a camera on another road?") %}
+It warns about every camera it gets close to, whichever way it faces. The beeps
+stop once you're moving away from it.
+{% endcall %}
+
+{% call q("flashes", "using", "What do the flashes of the camera LED mean?") %}
+The speed limit: one flash per 10 km/h, so five flashes mean 50. See all
+<a href="how-it-works.html#lights-and-sounds">lights and sounds</a>.
+{% endcall %}
+
+{% call q("limit", "using", "Where does the spoken speed limit come from?") %}
+From the map: it's the limit mapped for that camera on OpenStreetMap. If none is mapped you hear
+“limit unknown”, and you can <a href="camera-coverage.html#add-a-camera">add it yourself</a>.
+{% endcall %}
+
+{% call q("traffic", "using", "Will it keep beeping in a traffic jam?") %}
+No. It only beeps while you're moving towards a camera faster than {{ beep_min_speed_kmh }} km/h.
+{% endcall %}
+
+{% call q("volume", "using", "How do I change the volume?") %}
+Turn the volume wheel on the side.
+{% endcall %}
+
+{% call q("power", "using", "Can I leave it plugged in?") %}
+Yes. It turns on and off with the USB power, which in most cars means with the ignition.
+{% endcall %}
+
+{% call q("temperature", "using", "Can I leave it in the car in summer or winter?") %}
+Yes, it's made to handle {{ operating_temp }}.
+{% endcall %}
+
+{# --- legal & safety ------------------------------------------------------------------------ #}
+
+{% call q("legal", "legal", "Is it legal?") %}
+decameron only compares your GPS position with publicly known camera locations, like many
+navigation apps. It doesn't detect or jam radar. Some countries ban speed camera warnings while
+driving, so check the rules where you drive.
+{% endcall %}
+
+{% call q("safety", "legal", "Can I rely on it instead of the road signs?") %}
+No. It's a reminder, not a guarantee: new cameras appear and limits change. Always follow the
+road signs.
+{% endcall %}
+
+{# --- updates ------------------------------------------------------------------------------- #}
+
+{% call q("how-often", "updates", "How often should I update?") %}
+Once a month, or before a long trip. It takes about a minute.
+{% endcall %}
+
+{% call q("which-version", "updates", "How do I know which camera list my device has?") %}
+The device doesn't show it. If you're not sure, just update: you'll get the newest list, from
+{{ cams_updated }}.
+{% endcall %}
+
+{% call q("browsers", "updates", "Which browsers can update it?") %}
+Chrome, Edge, Opera and other Chromium-based browsers. With Firefox or Safari, use the
+<a href="setup-and-update.html#manual-update">manual update</a>.
+{% endcall %}
+
+{% call q("brick", "updates", "Can an update break the device?") %}
+No. Update mode is built into the chip and can't be overwritten. If an update is interrupted, just start again.
+{% endcall %}
+
+{% call q("catchcam", "updates", "I have a catchcam. Is it the same as decameron?") %}
+Yes. catchcam is decameron's old name: it's the same device with the same firmware, so it gets the
+same free <a href="setup-and-update.html#update">updates</a>.
+{% endcall %}
+
+{# --- troubleshooting ----------------------------------------------------------------------- #}
+
+{% call q("gps-red", "troubleshooting", "The GPS LED stays red") %}
+It's still looking for satellites, which can take a few minutes the first time. Make sure it can
+see the sky: tunnels, garages and some windscreen coatings block GPS.
+{% endcall %}
+
+{% call q("no-sound", "troubleshooting", "I don't hear anything") %}
+Turn up the volume wheel. If the LEDs stay dark too, it isn't getting power: try another port, adapter or cable.
+{% endcall %}
+
+{% call q("not-detected", "troubleshooting", "My computer doesn't see the device") %}
+<ol class="mb-0">
+    <li>Use a USB-C <strong>data</strong> cable, not a charge-only one</li>
+    <li>Hold the update button <em>while</em> you plug it in</li>
+    <li>Try a USB port directly on the computer, not on a hub</li>
+</ol>
+{% endcall %}
+
+{% call q("in-use", "troubleshooting", "The browser says the device is in use or access is denied") %}
+Another tab or program is using it. Close it, replug the device and try again, or use the
+<a href="setup-and-update.html#manual-update">manual update</a>.
+{% endcall %}
+
+{# --- ordering, shipping & warranty --------------------------------------------------------- #}
+
+{% call q("order", "ordering", "How do I order?") %}
+Email <a href="mailto:{{ contact_email }}">{{ contact_email }}</a> with the quantity and shipping
+address. We reply with the total and payment details.
+{% endcall %}
+
+{% call q("payment", "ordering", "How can I pay?") %}
+By {{ payment_methods }}. Card details are never entered on this site.
+{% endcall %}
+
+{% call q("shipping", "ordering", "Where do you ship and how long does it take?") %}
+We ship internationally. Orders leave {{ dispatch_time }}; how long delivery takes after
+that depends on the carrier and your country. We confirm the shipping cost by email before
+you pay. Customs duties and import taxes, if any, are set by your country and paid by you.
+{% endcall %}
+
+{% call q("returns", "ordering", "Can I return it?") %}
+{{ returns_policy }}
+{% endcall %}
+
+{% call q("warranty", "ordering", "What if it breaks?") %}
+decameron comes with a {{ warranty }}. Email us and we'll repair or replace it.
+{% endcall %}
+
+{# --- cameras & contributing ---------------------------------------------------------------- #}
+
+{% call q("missing-camera", "contributing", "A camera is missing or wrong. How do I fix it?") %}
+Fix it on <a href="https://www.openstreetmap.org/">OpenStreetMap</a>
+(<a href="camera-coverage.html#add-a-camera">here's how</a>). It's in the camera list by the next
+day; then update your device.
+{% endcall %}
+
+{% call q("ideas", "contributing", "I have an idea or found a bug") %}
+Open an issue on <a href="{{ github_url }}/issues">GitHub</a> or email
+<a href="mailto:{{ contact_email }}">{{ contact_email }}</a>.
+{% endcall %}

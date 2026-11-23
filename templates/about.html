@@ -1,6 +1,75 @@
 {% extends "base.html" %}
+{% import "_macros.html" as m with context %}
 {% set active_page = "about" %}
-{% block title %}decameron - about{% endblock %}
+{% set footer_theme = "dark" %}
+{% block title %}about — decameron{% endblock %}
+{% block description %}why decameron exists, who builds it, and why it is offline, private and open source.{% endblock %}
 
 {% block content %}
+{% call m.section("dark") %}
+<div class="row gx-5 gy-4 align-items-center">
+    <div class="col-lg-7">
+        <h1 class="display-3 fw-semibold lh-1 mb-0">about decameron</h1>
+        <p class="fs-4 text-secondary mb-3">speed camera alerts usually come with a catch: an app that wants your location, an account, a subscription, a phone mounted on the windscreen</p>
+        <p class="fs-5 mb-0">decameron does the same job with none of that. It's a small, independent hardware project: one device that knows where the cameras are, tells you about them, and keeps where you've been to itself.</p>
+    </div>
+    <div class="col-lg-5">
+        <img src="https://placehold.co/800x600" class="img-fluid w-100" alt="the maker at the workbench, or a decameron being assembled" loading="lazy">
+    </div>
+</div>
+{% endcall %}
+
+{% call m.section("light") %}
+<h2 class="display-4 fw-semibold lh-1 mb-5">what we stand for</h2>
+<div class="row row-cols-1 row-cols-md-2 row-cols-xl-4 g-5">
+    <div class="col">
+        <h3 class="fs-4 fw-semibold">offline</h3>
+        <p class="text-secondary mb-0">No SIM, no Wi-Fi, no Bluetooth. Everything it needs is on the device, so it works the same in a city centre and on a mountain road with no signal.</p>
+    </div>
+    <div class="col">
+        <h3 class="fs-4 fw-semibold">private</h3>
+        <p class="text-secondary mb-0">No account, no app, no data collection. Your position is used for a moment to find the nearest camera, and then it's gone.</p>
+    </div>
+    <div class="col">
+        <h3 class="fs-4 fw-semibold">open</h3>
+        <p class="text-secondary mb-0">The firmware is MIT-licensed on <a href="{{ github_url }}">GitHub</a>, and the camera data comes from OpenStreetMap. Anyone can check it, improve it, or build their own.</p>
+    </div>
+    <div class="col">
+        <h3 class="fs-4 fw-semibold">pay once</h3>
+        <p class="text-secondary mb-0">Buy it once and it's yours. Updates are a public download, free forever, and don't depend on us staying in business.</p>
+    </div>
+</div>
+{% endcall %}
+
+{% call m.section("dark") %}
+<div class="row gx-5 gy-4 align-items-center">
+    <div class="col-lg-8">
+        <h2 class="display-4 fw-semibold lh-1 mb-4">who builds it</h2>
+        <p class="fs-5 text-secondary">decameron is made by Ivan Vnučec, an embedded software engineer from Zagreb, Croatia. The idea came from a love of road trips across Europe.</p>
+        <p class="fs-5 text-secondary mb-0">The whole story, from the first prototype on, is on <a href="{{ blog_url }}" class="link-light">the project blog</a>.</p>
+    </div>
+    <div class="col-lg-4">
+        <img src="https://placehold.co/800x800" class="img-fluid w-100" alt="portrait of Ivan" loading="lazy">
+    </div>
+</div>
+{% endcall %}
+
+{% call m.section("light") %}
+<div class="row gx-5 gy-5">
+    <div class="col-lg-6">
+        <h2 class="display-4 fw-semibold lh-1 mb-4">contact &amp; seller</h2>
+        <dl class="fs-5 mb-0">
+            <dt>Email</dt>
+            <dd class="text-secondary"><a href="mailto:{{ contact_email }}">{{ contact_email }}</a></dd>
+            <dt>Source code</dt>
+            <dd class="text-secondary"><a href="{{ github_url }}">{{ github_url | replace("https://", "") }}</a></dd>
+            <dt>Seller</dt>
+            <dd class="text-secondary mb-0">{{ seller }}</dd>
+        </dl>
+    </div>
+</div>
+{% endcall %}
+
+{{ m.closing_cta("dark", secondary_href="how-it-works.html", secondary_label="see how it works",
+                 heading="pay once, own it", text="no account, no app, free updates forever") }}
 {% endblock %}
