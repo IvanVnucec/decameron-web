@@ -46,7 +46,8 @@
     map.addControl(new maplibregl.FullscreenControl(), 'top-right');
     map.addControl(new maplibregl.ScaleControl({ maxWidth: 100, unit: 'metric' }), 'bottom-left');
 
-    map.on('load', () => {
+    // add the cameras as soon as the style is in, not on 'load', which also waits for every basemap tile
+    map.once('style.load', () => {
         map.addSource('cameras', { type: 'geojson', data: { type: 'FeatureCollection', features } });
         map.addLayer({
             id: 'cameras',
