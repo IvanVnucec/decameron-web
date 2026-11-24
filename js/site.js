@@ -19,6 +19,8 @@
         const main = gallery.querySelector('[data-gallery-main]');
         const thumbs = gallery.querySelectorAll('[data-large]');
         const show = (thumb) => {
+            // srcset wins over src, so swap both or the picture never changes
+            if (thumb.dataset.srcset) main.srcset = thumb.dataset.srcset;
             main.src = thumb.dataset.large;
             main.alt = thumb.dataset.alt;
             thumbs.forEach((t) => {
@@ -32,8 +34,82 @@
             thumb.addEventListener('focus', () => show(thumb));
         });
         // fetch the large photos early so the first hover doesn't flash
-        window.addEventListener('load', () => thumbs.forEach((t) => { new Image().src = t.dataset.large; }));
+        // (with the same sizes, so the browser picks the same 800 or 1600 file it will show)
+        window.addEventListener('load', () => thumbs.forEach((t) => {
+            const img = new Image();
+            img.sizes = main.sizes;
+            if (t.dataset.srcset) img.srcset = t.dataset.srcset;
+            img.src = t.dataset.large;
+        }));
     });
+
+    // how it works: the render's LEDs light up the way the device does in the current step. the steps play
+    // one by one while the render is on screen; clicking a step shows that one and stops the playing.
+    // the light patterns themselves are CSS animations keyed on data-step, see .led-demo in style.css
+    const ledDemo = document.querySelector('[data-led-demo]');
+    if (ledDemo) {
+        const list = document.querySelector('[data-led-steps]');
+        const steps = [...document.querySelectorAll('[data-led-step]')];
+        // how long each step stays up: two status blinks, or two full rounds of the five camera flashes
+        const stepMs = { 1: 5000, 2: 5000, 3: 6000, 4: 5000 };
+        let playing = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        let timer = null;
+
+        const showStep = (step) => {
+            if (ledDemo.dataset.step === step.dataset.ledStep) return; // same step: don't restart the flashes
+            ledDemo.dataset.step = step.dataset.ledStep;
+            steps.forEach((s) => {
+                s.classList.toggle('active', s === step);
+                if (s === step) s.setAttribute('aria-current', 'step');
+                else s.removeAttribute('aria-current');
+            });
+            placeBorder();
+        };
+        // one blue border for the whole list, which glides to the active step (ol.steps[data-led-steps]::after)
+        const placeBorder = () => {
+            const active = steps.find((s) => s.classList.contains('active')) || steps[0];
+            list.style.setProperty('--border-top', `${active.offsetTop}px`);
+            list.style.setProperty('--border-height', `${active.offsetHeight}px`);
+        };
+        placeBorder();
+        list.classList.add('has-border'); // after placing it, so it appears in place rather than gliding in
+        new ResizeObserver(placeBorder).observe(list);
+
+        const scheduleNext = () => {
+            timer = setTimeout(() => {
+                const i = steps.findIndex((s) => s.dataset.ledStep === ledDemo.dataset.step);
+                showStep(steps[(i + 1) % steps.length]);
+                scheduleNext();
+            }, stepMs[ledDemo.dataset.step] || 5000);
+        };
+        const pause = () => {
+            clearTimeout(timer);
+            timer = null;
+        };
+
+        steps.forEach((step) => {
+            step.tabIndex = 0;
+            if (step.dataset.ledStep === ledDemo.dataset.step) step.setAttribute('aria-current', 'step');
+            const pick = () => {
+                playing = false;
+                pause();
+                showStep(step);
+            };
+            step.addEventListener('click', pick);
+            step.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    pick();
+                }
+            });
+        });
+
+        // only play while the render can be seen, so nobody arrives halfway through a step
+        new IntersectionObserver(([entry]) => {
+            if (entry.isIntersecting && playing && !timer) scheduleNext();
+            else if (!entry.isIntersecting) pause();
+        }, { threshold: 0.5 }).observe(ledDemo);
+    }
 
     // faq: opening support-and-faq#faq-<id> expands that answer
     function openFromHash() {

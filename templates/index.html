@@ -100,23 +100,25 @@
     ("img/update.svg", "free daily updates", "a fresh camera list every day, over USB"),
     ("img/usb-c.svg", "USB-C powered", "works from any car USB port"),
 ] %}
-{# gallery photos: (large 660x440, thumbnail 100x100, alt). keep every large photo at 3:2 so the swap doesn't jump #}
+{# gallery renders: (file name in img/renders/, alt). each comes as <name>-800.webp and <name>-1600.webp;
+   the large view is a fixed 3:2 frame, so renders of any shape swap in without the page jumping #}
 {% set photos = [
-    ("https://placehold.co/660x440?text=photo+1", "https://placehold.co/100x100?text=1", "decameron device"),
-    ("https://placehold.co/660x440?text=photo+2", "https://placehold.co/100x100?text=2", "decameron detail 2"),
-    ("https://placehold.co/660x440?text=photo+3", "https://placehold.co/100x100?text=3", "decameron detail 3"),
-    ("https://placehold.co/660x440?text=photo+4", "https://placehold.co/100x100?text=4", "decameron detail 4"),
+    ("front", "decameron straight from the front: volume wheel and the three LEDs"),
+    ("front34", "decameron from the front corner: volume wheel and the three LEDs"),
+    ("side34", "decameron from the other corner: update button and USB-C port"),
+    ("underside", "underside of decameron with the speaker grille and four screws"),
 ] %}
+{% macro render_srcset(name) %}img/renders/{{ name }}-800.webp 800w, img/renders/{{ name }}-1600.webp 1600w{% endmacro %}
 {# hover (or tap, on phones) a thumbnail to show it large; see js/site.js #}
 {% set gallery %}
 <div class="d-flex flex-column gap-3" data-gallery>
     <div>
-        <img src="{{ photos[0][0] }}" width="660" height="440" class="img-fluid w-100" alt="{{ photos[0][2] }}" loading="lazy" data-gallery-main>
+        <img src="img/renders/{{ photos[0][0] }}-800.webp" srcset="{{ render_srcset(photos[0][0]) }}" sizes="(min-width: 768px) 50vw, 100vw" width="1600" height="1067" class="img-fluid w-100 gallery-main" alt="{{ photos[0][1] }}" loading="lazy" data-gallery-main>
     </div>
     <div class="d-flex flex-row justify-content-center gap-3">
-        {% for large, thumb, alt in photos %}
-        <button type="button" class="gallery-thumb{% if loop.first %} active{% endif %}" data-large="{{ large }}" data-alt="{{ alt }}" aria-label="show photo {{ loop.index }}" aria-pressed="{{ 'true' if loop.first else 'false' }}">
-            <img src="{{ thumb }}" width="100" height="100" class="img-fluid" alt="" loading="lazy">
+        {% for name, alt in photos %}
+        <button type="button" class="gallery-thumb{% if loop.first %} active{% endif %}" data-large="img/renders/{{ name }}-800.webp" data-srcset="{{ render_srcset(name) }}" data-alt="{{ alt }}" aria-label="show view {{ loop.index }}" aria-pressed="{{ 'true' if loop.first else 'false' }}">
+            <img src="img/renders/{{ name }}-800.webp" width="100" height="100" class="img-fluid" alt="" loading="lazy">
         </button>
         {% endfor %}
     </div>

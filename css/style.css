@@ -68,6 +68,18 @@ ol.steps > li::before {
     color: #0a58ca;
 }
 
+/* home gallery: renders of any shape sit whole inside a fixed frame, so swapping them doesn't move the page */
+.gallery-main {
+    aspect-ratio: 3 / 2;
+    object-fit: contain;
+    padding: 14%; /* keeps the render a little smaller than the frame */
+}
+
+.gallery-thumb img {
+    aspect-ratio: 1;
+    object-fit: contain;
+}
+
 /* home gallery thumbnails: the one shown large is at full strength */
 .gallery-thumb {
     flex: 0 1 100px;
@@ -84,6 +96,109 @@ ol.steps > li::before {
 }
 
 .gallery-thumb:focus-visible {
+    outline: 2px solid var(--bs-primary);
+    outline-offset: 2px;
+}
+
+/* how it works: the render's LEDs, lit the way the device lights them in the step being hovered.
+   timings are the firmware's: the status LED blinks green 1 s on / 1 s off; the GPS LED is red until it has
+   a fix, then green; the camera LED flashes blue once per 10 km/h of the limit (200 ms on / 200 ms off,
+   here five for "limit fifty"), then rests 1 s */
+.led-demo {
+    position: relative;
+}
+
+.led-demo .led {
+    --led: #9dff3c;
+    position: absolute;
+    top: 71.2%;
+    width: 7%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(closest-side, #fff 0 16%, var(--led) 34%, color-mix(in srgb, var(--led) 35%, transparent) 62%, transparent);
+    mix-blend-mode: screen;
+    pointer-events: none;
+}
+
+.led-demo .led-status {
+    animation: led-blink 2s step-end infinite;
+}
+
+.led-demo[data-step="1"] .led-gps {
+    --led: #ff2a1f;
+}
+
+.led-demo .led-camera {
+    --led: #2b7bff;
+    opacity: 0;
+}
+
+.led-demo[data-step="3"] .led-camera {
+    animation: led-flash-five 3s step-end infinite;
+}
+
+@keyframes led-blink {
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+@keyframes led-flash-five {
+    0%, 13.333%, 26.667%, 40%, 53.333% { opacity: 1; }
+    6.667%, 20%, 33.333%, 46.667%, 60%, 100% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .led-demo .led {
+        animation: none !important;
+    }
+
+    .led-demo[data-step="3"] .led-camera {
+        opacity: 1;
+    }
+}
+
+/* the steps are clickable boxes. one blue rounded border, drawn by the list, glides to the step whose
+   lights are showing (site.js sets --border-top/--border-height to that step's box). every step keeps a
+   transparent border of the same width so the text sits exactly inside it */
+ol.steps[data-led-steps] {
+    position: relative;
+    gap: 0.5rem;
+}
+
+ol.steps[data-led-steps] > li {
+    padding: calc(0.75rem - 2px) calc(1rem - 2px) calc(0.75rem - 2px) calc(3.75rem - 2px); /* minus the extra border width, so the text stays put */
+    border: 3px solid transparent;
+    border-radius: var(--bs-border-radius-xl);
+    cursor: pointer;
+}
+
+ol.steps[data-led-steps] > li::before {
+    left: 1rem;
+    top: 0.75rem;
+}
+
+ol.steps[data-led-steps].has-border::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--border-height);
+    transform: translateY(var(--border-top));
+    border: 3px solid var(--bs-primary);
+    border-radius: var(--bs-border-radius-xl);
+    pointer-events: none;
+    transition: transform 0.4s ease, height 0.4s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    ol.steps[data-led-steps].has-border::after {
+        transition: none;
+    }
+}
+
+ol.steps[data-led-steps] > li:focus-visible {
     outline: 2px solid var(--bs-primary);
     outline-offset: 2px;
 }

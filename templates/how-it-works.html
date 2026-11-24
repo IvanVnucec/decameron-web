@@ -10,24 +10,34 @@
 <p class="fs-5 text-secondary mb-5 col-lg-9">the camera locations are stored on the device. GPS tells the device where it is on the road. when it gets close to a camera, it warns you with a light and a voice</p>
 {#- on-a-drive / lights-and-sounds: older links (support page, setup page, FAQ, the device section) land on the steps -#}
 <div class="row gx-5 gy-5 align-items-center" id="on-a-drive">
-    <div class="col-lg-6 order-lg-2">
-        <img src="https://placehold.co/800x450" class="img-fluid w-100" alt="short video or photo sequence: decameron on the dashboard as the car approaches a camera, camera LED flashing" loading="lazy">
+    <div class="col-md-8 col-lg-6 order-lg-2 mx-auto">
+        {#- the LEDs light up like the real ones in the step being hovered or tapped (js/site.js). the dots sit
+            on the render's LED holes, measured on front-1600.webp; left to right: status, camera, GPS -#}
+        <div class="p-lg-4">
+            <div class="led-demo" data-led-demo data-step="1">
+                <img src="img/renders/front-800.webp" srcset="img/renders/front-800.webp 800w, img/renders/front-1600.webp 1600w" sizes="(min-width: 992px) 50vw, (min-width: 768px) 432px, 100vw" width="1600" height="688" class="d-block w-100 h-auto" alt="decameron straight from the front: volume wheel and the three LEDs">
+                <span class="led led-status" style="left: 54.34%;"></span>
+                <span class="led led-camera" style="left: 64.47%;"></span>
+                <span class="led led-gps" style="left: 74.62%;"></span>
+            </div>
+            <p class="small text-secondary text-center mt-3 mb-0" aria-hidden="true">click a step to see its lights</p>
+        </div>
     </div>
     <div class="col-lg-6">
-        <ol class="steps fs-5 mb-0" id="lights-and-sounds">
-            <li>
+        <ol class="steps fs-5 mb-0" id="lights-and-sounds" data-led-steps>
+            <li data-led-step="1" class="active">
                 <h2 class="fs-5 fw-semibold mb-1">plug it in</h2>
                 <p class="text-secondary mb-0">A start-up sound, then <span class="voice">“searching for a GPS signal”</span>. The status LED blinks green to show decameron is running, and the GPS LED stays red until it finds satellites.</p>
             </li>
-            <li>
+            <li data-led-step="2">
                 <h2 class="fs-5 fw-semibold mb-1">GPS found</h2>
                 <p class="text-secondary mb-0">Usually within about 30 seconds you hear <span class="voice">“GPS signal acquired”</span> and the GPS LED turns green: decameron is now watching the road.</p>
             </li>
-            <li>
+            <li data-led-step="3">
                 <h2 class="fs-5 fw-semibold mb-1">camera ahead</h2>
                 <p class="text-secondary mb-0">About {{ alert_lookahead_s }} seconds before a camera: <span class="voice">“warning, speed camera ahead, limit fifty”</span>, and the camera LED flashes. Then it keeps beeping: <strong>three beeps</strong> if you're over the limit, <strong>one</strong> if you're under.</p>
             </li>
-            <li>
+            <li data-led-step="4">
                 <h2 class="fs-5 fw-semibold mb-1">camera passed</h2>
                 <p class="text-secondary mb-0">As soon as you're moving away from the camera the beeps stop, and decameron waits for the next one.</p>
             </li>
@@ -39,22 +49,32 @@
 {% call m.section("light", id="the-device") %}
 <h2 class="display-3 fw-semibold lh-1 mb-4">the device</h2>
 <div class="row gx-5 gy-4 align-items-center">
-    <div class="col-lg-6">
-        <img src="https://placehold.co/800x600" class="img-fluid w-100" alt="labelled photo of the device: USB-C port, update button, volume wheel, the three LEDs, speaker side" loading="lazy">
+    <div class="col-lg-6 order-lg-last">
+        <img src="img/renders/exploded-800.webp" srcset="img/renders/exploded-800.webp 800w, img/renders/exploded-1600.webp 1600w" sizes="420px" width="420" height="551" class="img-fluid d-block mx-auto" alt="exploded view of decameron: lid, circuit board with the GPS antenna, base and four screws" loading="lazy">
     </div>
     <div class="col-lg-6">
-        <dl class="fs-5 mb-0">
-            <dt>USB-C port</dt>
-            <dd class="text-secondary">power in the car, and updates from a computer</dd>
-            <dt>three LEDs</dt>
-            <dd class="text-secondary">status, GPS and camera</dd>
-            <dt>speaker</dt>
-            <dd class="text-secondary">voice alerts and beeps</dd>
-            <dt>volume wheel</dt>
-            <dd class="text-secondary">sets how loud the voice and beeps are</dd>
-            <dt>update button</dt>
-            <dd class="text-secondary mb-0">for <a href="setup-and-update#update">updating the camera list</a>. press it with a paperclip</dd>
-        </dl>
+        <ul class="fs-5 mb-0">
+            <li class="mb-2">
+                <div class="fw-bold">USB-C port</div>
+                <div class="text-secondary">power in the car, and updates from a computer</div>
+            </li>
+            <li class="mb-2">
+                <div class="fw-bold">three LEDs</div>
+                <div class="text-secondary">from left to right: status, camera and GPS</div>
+            </li>
+            <li class="mb-2">
+                <div class="fw-bold">speaker</div>
+                <div class="text-secondary">voice alerts and beeps</div>
+            </li>
+            <li class="mb-2">
+                <div class="fw-bold">volume wheel</div>
+                <div class="text-secondary">sets how loud the voice and beeps are</div>
+            </li>
+            <li>
+                <div class="fw-bold">update button</div>
+                <div class="text-secondary">for <a href="setup-and-update#update">updating the camera list</a>. press it with a paperclip</div>
+            </li>
+        </ul>
     </div>
 </div>
 {% endcall %}
@@ -92,7 +112,7 @@
             <li>GPS receiver</li>
             <li>16 MB flash memory holding the firmware and the full camera list</li>
             <li>speaker, with a volume wheel</li>
-            <li>status, GPS and camera LEDs</li>
+            <li>status, camera and GPS LEDs</li>
             <li>USB-C for power and updates</li>
         </ul>
     </div>
@@ -116,3 +136,7 @@
 
 {{ m.closing_cta("light", secondary_href="camera-coverage", secondary_label="check camera coverage") }}
 {% endblock %}
+
+{% block scripts %}
+<script src="{{ asset('js/site.js') }}"></script>
+{% endblock scripts %}
