@@ -9,10 +9,10 @@
 <h1 class="display-3 fw-semibold lh-1 mb-0">how it works</h1>
 <p class="fs-5 text-secondary mb-5 col-lg-9">the camera locations are stored on the device. GPS tells the device where it is on the road. when it gets close to a camera, it warns you with a light and a voice</p>
 {#- on-a-drive / lights-and-sounds: older links (support page, setup page, FAQ, the device section) land on the steps -#}
-<div class="row gx-5 gy-5 align-items-center" id="on-a-drive">
+<div class="row gx-5 gy-4 gy-lg-5 align-items-center" id="on-a-drive">
     <div class="col-md-8 col-lg-6 order-lg-2 mx-auto">
-        {#- the LEDs light up like the real ones in the step being hovered or tapped (js/site.js). the dots sit
-            on the render's LED holes, measured on front-1600.webp; left to right: status, camera, GPS -#}
+        {#- the LEDs light up like the real ones in the step showing (js/site.js). the dots sit on the
+            render's LED holes, measured on front-1600.webp; left to right: status, camera, GPS -#}
         <div class="p-lg-4">
             <div class="led-demo" data-led-demo data-step="1">
                 <img src="img/renders/front-800.webp" srcset="img/renders/front-800.webp 800w, img/renders/front-1600.webp 1600w" sizes="(min-width: 992px) 50vw, (min-width: 768px) 432px, 100vw" width="1600" height="688" class="d-block w-100 h-auto" alt="decameron straight from the front: volume wheel and the three LEDs">
@@ -20,7 +20,14 @@
                 <span class="led led-camera" style="left: 64.47%;"></span>
                 <span class="led led-gps" style="left: 74.62%;"></span>
             </div>
-            <p class="small text-secondary text-center mt-3 mb-0" aria-hidden="true">click a step to see its lights</p>
+            <p class="small text-secondary text-center mt-3 mb-0 d-none d-lg-block" aria-hidden="true">click a step to see its lights</p>
+            {#- below lg only one step shows at a time, and these pick it -#}
+            <div class="nav nav-pills justify-content-center gap-2 mt-3 d-lg-none" role="group" aria-label="steps">
+                <button type="button" class="nav-link link-body-emphasis rounded-pill px-3 active" data-led-pick="1" aria-pressed="true" aria-label="step 1: plug it in">1</button>
+                <button type="button" class="nav-link link-body-emphasis rounded-pill px-3" data-led-pick="2" aria-pressed="false" aria-label="step 2: GPS found">2</button>
+                <button type="button" class="nav-link link-body-emphasis rounded-pill px-3" data-led-pick="3" aria-pressed="false" aria-label="step 3: camera ahead">3</button>
+                <button type="button" class="nav-link link-body-emphasis rounded-pill px-3" data-led-pick="4" aria-pressed="false" aria-label="step 4: camera passed">4</button>
+            </div>
         </div>
     </div>
     <div class="col-lg-6">

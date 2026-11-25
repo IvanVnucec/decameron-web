@@ -100,7 +100,7 @@ ol.steps > li::before {
     outline-offset: 2px;
 }
 
-/* how it works: the render's LEDs, lit the way the device lights them in the step being hovered.
+/* how it works: the render's LEDs, lit the way the device lights them in the step showing.
    timings are the firmware's: the status LED blinks green 1 s on / 1 s off; the GPS LED is red until it has
    a fix, then green; the camera LED flashes blue once per 10 km/h of the limit (200 ms on / 200 ms off,
    here five for "limit fifty"), then rests 1 s */
@@ -158,11 +158,9 @@ ol.steps > li::before {
     }
 }
 
-/* the steps are clickable boxes. one blue rounded border, drawn by the list, glides to the step whose
-   lights are showing (site.js sets --border-top/--border-height to that step's box). every step keeps a
-   transparent border of the same width so the text sits exactly inside it */
+/* the steps are clickable boxes. on large screens the step whose lights are showing gets a blue rounded
+   border, which fades out on the old step as it fades in on the new one */
 ol.steps[data-led-steps] {
-    position: relative;
     gap: 0.5rem;
 }
 
@@ -171,6 +169,19 @@ ol.steps[data-led-steps] > li {
     border: 3px solid transparent;
     border-radius: var(--bs-border-radius-xl);
     cursor: pointer;
+    transition: border-color 0.5s ease;
+}
+
+@media (min-width: 992px) {
+    ol.steps[data-led-steps] > li.active {
+        border-color: var(--bs-primary);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    ol.steps[data-led-steps] > li {
+        transition: none;
+    }
 }
 
 ol.steps[data-led-steps] > li::before {
@@ -178,29 +189,48 @@ ol.steps[data-led-steps] > li::before {
     top: 0.75rem;
 }
 
-ol.steps[data-led-steps].has-border::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: var(--border-height);
-    transform: translateY(var(--border-top));
-    border: 3px solid var(--bs-primary);
-    border-radius: var(--bs-border-radius-xl);
-    pointer-events: none;
-    transition: transform 0.4s ease, height 0.4s ease;
-}
-
-@media (prefers-reduced-motion: reduce) {
-    ol.steps[data-led-steps].has-border::after {
-        transition: none;
-    }
-}
-
 ol.steps[data-led-steps] > li:focus-visible {
     outline: 2px solid var(--bs-primary);
     outline-offset: 2px;
+}
+
+/* below lg the render sits above the steps, so only the step showing is shown, picked with the 1–4 pills
+   under the render, as plain text. the steps share one grid cell: the box is as tall as the longest step, so the page below doesn't jump when they change.
+   the old step fades out first, and only then does the new one fade in (the delay on .active), so they
+   never overlap */
+@media (max-width: 991.98px) {
+    ol.steps[data-led-steps] {
+        display: grid;
+    }
+
+    ol.steps[data-led-steps] > li {
+        grid-area: 1 / 1;
+        padding: 0;
+        border: 0;
+        cursor: auto;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(0.5rem);
+        transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+    }
+
+    ol.steps[data-led-steps] > li.active {
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        transition: opacity 0.3s ease 0.2s, transform 0.3s ease 0.2s, visibility 0s 0.2s;
+    }
+
+    ol.steps[data-led-steps] > li::before {
+        display: none;
+    }
+}
+
+@media (max-width: 991.98px) and (prefers-reduced-motion: reduce) {
+    ol.steps[data-led-steps] > li {
+        transform: none;
+        transition: none;
+    }
 }
 
 /* faq lists: the default light divider (#dee2e6) almost vanishes on white, so match the footer line */

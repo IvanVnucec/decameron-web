@@ -48,8 +48,8 @@
     // the light patterns themselves are CSS animations keyed on data-step, see .led-demo in style.css
     const ledDemo = document.querySelector('[data-led-demo]');
     if (ledDemo) {
-        const list = document.querySelector('[data-led-steps]');
         const steps = [...document.querySelectorAll('[data-led-step]')];
+        const pills = [...document.querySelectorAll('[data-led-pick]')]; // below lg: one step shows, picked by number
         // how long each step stays up: two status blinks, or two full rounds of the five camera flashes
         const stepMs = { 1: 5000, 2: 5000, 3: 6000, 4: 5000 };
         let playing = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -63,17 +63,12 @@
                 if (s === step) s.setAttribute('aria-current', 'step');
                 else s.removeAttribute('aria-current');
             });
-            placeBorder();
+            pills.forEach((p) => {
+                const on = p.dataset.ledPick === step.dataset.ledStep;
+                p.classList.toggle('active', on);
+                p.setAttribute('aria-pressed', String(on));
+            });
         };
-        // one blue border for the whole list, which glides to the active step (ol.steps[data-led-steps]::after)
-        const placeBorder = () => {
-            const active = steps.find((s) => s.classList.contains('active')) || steps[0];
-            list.style.setProperty('--border-top', `${active.offsetTop}px`);
-            list.style.setProperty('--border-height', `${active.offsetHeight}px`);
-        };
-        placeBorder();
-        list.classList.add('has-border'); // after placing it, so it appears in place rather than gliding in
-        new ResizeObserver(placeBorder).observe(list);
 
         const scheduleNext = () => {
             timer = setTimeout(() => {
@@ -87,22 +82,25 @@
             timer = null;
         };
 
+        const pick = (step) => {
+            playing = false;
+            pause();
+            showStep(step);
+        };
         steps.forEach((step) => {
             step.tabIndex = 0;
             if (step.dataset.ledStep === ledDemo.dataset.step) step.setAttribute('aria-current', 'step');
-            const pick = () => {
-                playing = false;
-                pause();
-                showStep(step);
-            };
-            step.addEventListener('click', pick);
+            step.addEventListener('click', () => pick(step));
             step.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
-                    pick();
+                    pick(step);
                 }
             });
         });
+        pills.forEach((pill) => pill.addEventListener('click', () => {
+            pick(steps.find((s) => s.dataset.ledStep === pill.dataset.ledPick));
+        }));
 
         // only play while the render can be seen, so nobody arrives halfway through a step
         new IntersectionObserver(([entry]) => {
